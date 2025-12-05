@@ -6,10 +6,20 @@
 #include "GameFramework/Character.h"
 #include "GASRPG_BaseCharacter.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class GASRPG_API AGASRPG_BaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-
+public:
+	AGASRPG_BaseCharacter();
+	
+protected:
+	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Combat")
+	TObjectPtr<USkeletalMeshComponent> WeaponMesh;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Combat")
+	FName WeaponSocket { "WeaponHandSocket" };
 };
