@@ -1,0 +1,56 @@
+# --- Unreal Engine Build Artifacts ---
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+DerivedDataCache/*
+Intermediate/*
+Saved/*
+
+# Built plugins and modules
+Plugins/*/Intermediate/
+Plugins/*/Binaries/
+
+# Ignore generated project files (optional if you regenerate frequently)
+*.sln
+*.xcodeproj
+*.xcworkspace
+*.vcxproj*
+*.opensdf
+*.sdf
+*.suo
+
+# Rider / VSCode / JetBrains cache
+.idea/
+.vscode/
+*.user
+*.userprefs
+
+# Unreal automatic backup files
+*.log
+*.ldb
+*.tmp
+*.bak
+
+# Build config and local machine settings
+Saved/
+Config/Localization/*
+
+# Ignore crash reports
+Saved/Crashes/
+
+# Ignore platform-specific junk
+.DS_Store
+Thumbs.db
+
+# Ignore Python virtual environments (if you use Python automation)
+.env/
+.venv/
+__pycache__/
+*.pyc
+
+# Ignore Marketplace assets you don’t want versioned (optional)
+#Content/Marketplace/
+
+# Keep only Source and Content (except generated)
+# (You can force-include .uasset/.umap if needed)
