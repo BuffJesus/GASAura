@@ -14,12 +14,8 @@ class GASRPG_API AGASRPG_EnemyCharacter : public AGASRPG_BaseCharacter, public I
 
 public:
 	AGASRPG_EnemyCharacter();
-	virtual void Tick(float DeltaTime) override;
 	
 	// Interface function overrides
 	virtual void HighlightActor() override;
 	virtual void UnhighlightActor() override;
-	
-	UPROPERTY(BlueprintReadOnly, Category = "GASRPG|Enemy")
-	bool bIsHighlighted { false };
 };

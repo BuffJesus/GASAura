@@ -2,6 +2,7 @@
 
 
 #include "Characters/Enemies/GASRPG_EnemyCharacter.h"
+#include "GASRPG/GASRPG.h"
 
 AGASRPG_EnemyCharacter::AGASRPG_EnemyCharacter()
 {
@@ -9,23 +10,23 @@ AGASRPG_EnemyCharacter::AGASRPG_EnemyCharacter()
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
 }
 
-void AGASRPG_EnemyCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	
-	if (bIsHighlighted)
-	{
-		DrawDebugSphere(GetWorld(), GetActorLocation(), 100.0f, 12, FColor::Red, false, 0.1f);
-	}
-}
-
 void AGASRPG_EnemyCharacter::HighlightActor()
 {
-	bIsHighlighted = true;
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	if (WeaponMesh)
+	{
+		WeaponMesh->SetRenderCustomDepth(true);
+		WeaponMesh->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	}
 }
 
 void AGASRPG_EnemyCharacter::UnhighlightActor()
 {
-	bIsHighlighted = false;
+	GetMesh()->SetRenderCustomDepth(false);
+	if (WeaponMesh)
+	{
+		WeaponMesh->SetRenderCustomDepth(false);
+	}
 }
 
