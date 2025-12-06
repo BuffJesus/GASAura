@@ -6,6 +6,9 @@
 #include "GameFramework/Character.h"
 #include "GASRPG_BaseCharacter.generated.h"
 
+class UAttributeSet;
+class UAbilitySystemComponent;
+
 UCLASS(Abstract)
 class GASRPG_API AGASRPG_BaseCharacter : public ACharacter
 {
@@ -22,4 +25,10 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Combat")
 	FName WeaponSocket { "WeaponHandSocket" };
+	
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+	
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 };
