@@ -18,6 +18,9 @@ public:
 	// Sets default values for this character's properties
 	AGASRPG_PlayerCharacter();
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASRPG|Movement")
+	float RotationRate { 540.f };
+	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
