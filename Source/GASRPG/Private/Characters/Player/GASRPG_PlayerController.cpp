@@ -40,7 +40,7 @@ void AGASRPG_PlayerController::BeginPlay()
 	Super::BeginPlay();
 	check(GASRPGContext);
 	
-	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, TimerRate, true);
+	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, CursorTraceRate, true);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) };
 	check(Subsystem);
@@ -53,6 +53,12 @@ void AGASRPG_PlayerController::BeginPlay()
 	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	InputMode.SetHideCursorDuringCapture(false);
 	SetInputMode(InputMode);
+}
+
+void AGASRPG_PlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	GetWorldTimerManager().ClearTimer(CursorHitTimerHandle);
 }
 
 void AGASRPG_PlayerController::SetupInputComponent()

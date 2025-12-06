@@ -23,6 +23,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;	
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupInputComponent() override;
 	
 private:
@@ -38,8 +39,8 @@ private:
 	
 	UPROPERTY() FTimerHandle CursorHitTimerHandle;
 	
-	UPROPERTY(EditAnywhere, Category = "GASRPG|Cursor")
-	float TimerRate { 0.1f };
+	UPROPERTY(EditAnywhere, Category = "GASRPG|Cursor", meta = (ClampMin = "0.05", ClampMax = "0.5"))
+	float CursorTraceRate { 0.1f };
 	
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> LastActor;
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> ThisActor;
