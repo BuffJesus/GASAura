@@ -40,7 +40,7 @@ void AGASRPG_PlayerController::BeginPlay()
 	Super::BeginPlay();
 	check(GASRPGContext);
 	
-	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, 0.2f, true);
+	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, TimerRate, true);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) };
 	check(Subsystem);

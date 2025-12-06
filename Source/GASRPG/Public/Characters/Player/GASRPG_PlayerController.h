@@ -36,8 +36,10 @@ private:
 	
 	void CursorTrace();
 	
-	UPROPERTY()
-	FTimerHandle CursorHitTimerHandle;
+	UPROPERTY() FTimerHandle CursorHitTimerHandle;
+	
+	UPROPERTY(EditAnywhere, Category = "GASRPG|Cursor")
+	float TimerRate { 0.2f };
 	
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> LastActor;
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> ThisActor;
