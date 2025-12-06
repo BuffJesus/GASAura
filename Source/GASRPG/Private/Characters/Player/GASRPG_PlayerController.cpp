@@ -5,16 +5,42 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
+#include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
 
 AGASRPG_PlayerController::AGASRPG_PlayerController()
 {
 	bReplicates = true;
 }
 
+void AGASRPG_PlayerController::CursorTrace()
+{
+	FHitResult CursorHit;
+	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+	if (!CursorHit.bBlockingHit) { return; }
+	
+	LastActor = ThisActor;
+	ThisActor = CursorHit.GetActor();
+	
+	if (ThisActor != LastActor)
+	{
+		if (LastActor != nullptr)
+		{
+			LastActor->UnhighlightActor();
+		}
+ 
+		if (ThisActor != nullptr)
+		{
+			ThisActor->HighlightActor();
+		}
+	}
+}
+
 void AGASRPG_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	check(GASRPGContext);
+	
+	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, 0.2f, true);
 	
 	UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) };
 	check(Subsystem);
@@ -47,3 +73,5 @@ void AGASRPG_PlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(FVector::RightVector, InputAxisVector.X);
 	}
 }
+
+

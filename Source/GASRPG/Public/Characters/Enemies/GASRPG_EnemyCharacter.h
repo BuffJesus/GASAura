@@ -4,25 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Characters/GASRPG_BaseCharacter.h"
+#include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
 #include "GASRPG_EnemyCharacter.generated.h"
 
 UCLASS()
-class GASRPG_API AGASRPG_EnemyCharacter : public AGASRPG_BaseCharacter
+class GASRPG_API AGASRPG_EnemyCharacter : public AGASRPG_BaseCharacter, public IGASRPG_EnemyInterface
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	
 	AGASRPG_EnemyCharacter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	// Interface function overrides
+	virtual void HighlightActor() override;
+	virtual void UnhighlightActor() override;
 };

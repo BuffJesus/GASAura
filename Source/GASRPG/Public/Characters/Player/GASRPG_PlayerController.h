@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "GASRPG_PlayerController.generated.h"
 
+class IGASRPG_EnemyInterface;
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
@@ -19,7 +20,7 @@ class GASRPG_API AGASRPG_PlayerController : public APlayerController
 	
 public:
 	AGASRPG_PlayerController();
-	
+
 protected:
 	virtual void BeginPlay() override;	
 	virtual void SetupInputComponent() override;
@@ -32,4 +33,12 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 	
 	void Move(const FInputActionValue& InputActionValue);
+	
+	void CursorTrace();
+	
+	UPROPERTY()
+	FTimerHandle CursorHitTimerHandle;
+	
+	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> LastActor;
+	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> ThisActor;
 };
