@@ -9,6 +9,7 @@ AGASRPG_PlayerState::AGASRPG_PlayerState()
 {
 	AbilitySystemComponent = CreateDefaultSubobject<UGASRPG_AbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	
 	AttributeSet = CreateDefaultSubobject<UGASRPG_AttributeSet>(TEXT("AttributeSet"));
 	
