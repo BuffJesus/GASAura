@@ -5,6 +5,14 @@
 #include "Net/UnrealNetwork.h"
 #include "AbilitySystem/Attributes/GASRPG_AttributeSetMacros.h"
 
+UGASRPG_AttributeSet::UGASRPG_AttributeSet()
+{
+	InitHealth(100.f);
+	InitMana(100.f);
+	InitMaxHealth(100.f);
+	InitMaxMana(100.f);
+}
+
 void UGASRPG_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
