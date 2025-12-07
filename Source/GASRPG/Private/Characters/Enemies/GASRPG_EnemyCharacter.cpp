@@ -2,12 +2,19 @@
 
 
 #include "Characters/Enemies/GASRPG_EnemyCharacter.h"
+#include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
+#include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
 #include "GASRPG/GASRPG.h"
 
 AGASRPG_EnemyCharacter::AGASRPG_EnemyCharacter()
 {
-	PrimaryActorTick.bCanEverTick = true;
 	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+	
+	AbilitySystemComponent = CreateDefaultSubobject<UGASRPG_AbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent->SetIsReplicated(true);
+	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+	
+	AttributeSet = CreateDefaultSubobject<UGASRPG_AttributeSet>(TEXT("AttributeSet"));
 }
 
 void AGASRPG_EnemyCharacter::HighlightActor()
