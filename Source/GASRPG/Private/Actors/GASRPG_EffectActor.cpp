@@ -23,11 +23,14 @@ AGASRPG_EffectActor::AGASRPG_EffectActor()
 void AGASRPG_EffectActor::OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (IAbilitySystemInterface* ASCInterface { Cast<IAbilitySystemInterface>(OtherActor) })
+	if (OtherActor->Implements<UAbilitySystemInterface>())
 	{
-		const UGASRPG_AttributeSet* GASRPGAttributeSet = Cast<UGASRPG_AttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UGASRPG_AttributeSet::StaticClass())); 
-		UGASRPG_AttributeSet* MutableGASRPGAttributeSet = const_cast<UGASRPG_AttributeSet*>(GASRPGAttributeSet);
-		MutableGASRPGAttributeSet->SetHealth(MutableGASRPGAttributeSet->GetHealth() + 25.0f);
+		if (IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
+		{
+			const UGASRPG_AttributeSet* GASRPGAttributeSet = Cast<UGASRPG_AttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UGASRPG_AttributeSet::StaticClass())); 
+			UGASRPG_AttributeSet* MutableGASRPGAttributeSet = const_cast<UGASRPG_AttributeSet*>(GASRPGAttributeSet);
+			MutableGASRPGAttributeSet->SetHealth(MutableGASRPGAttributeSet->GetHealth() + 25.0f);
+		}
 	}
 }
 
