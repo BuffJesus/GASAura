@@ -10,6 +10,12 @@ void UGASRPG_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Health);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxHealth);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Mana);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxMana);
 }
 
 IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Health);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxHealth);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Mana);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxMana);
