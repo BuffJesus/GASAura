@@ -2,7 +2,11 @@
 
 
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
+
+#include "AbilitySystemComponent.h"
+#include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Characters/Player/GASRPG_PlayerState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -30,6 +34,32 @@ AGASRPG_PlayerCharacter::AGASRPG_PlayerCharacter()
 	
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+}
+
+void AGASRPG_PlayerCharacter::InitAbilityActorInfo()
+{
+	if (AGASRPG_PlayerState* PS { GetPlayerState<AGASRPG_PlayerState>() })
+	{
+		AbilitySystemComponent = PS->GetAbilitySystemComponent();
+		AbilitySystemComponent->InitAbilityActorInfo(PS, this);
+		AttributeSet = PS->GetAttributeSet();
+	}
+}
+
+void AGASRPG_PlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// Init ability actor info server
+	InitAbilityActorInfo();
+}
+
+void AGASRPG_PlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+    
+	// Init ability actor info client
+	InitAbilityActorInfo();
 }
 
 

@@ -18,4 +18,7 @@ public:
 	// Interface function overrides
 	virtual void HighlightActor() override;
 	virtual void UnhighlightActor() override;
+	
+protected:
+	virtual void BeginPlay() override;
 };

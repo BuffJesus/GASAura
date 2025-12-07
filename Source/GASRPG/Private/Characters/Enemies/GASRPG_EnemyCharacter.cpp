@@ -17,6 +17,13 @@ AGASRPG_EnemyCharacter::AGASRPG_EnemyCharacter()
 	AttributeSet = CreateDefaultSubobject<UGASRPG_AttributeSet>(TEXT("AttributeSet"));
 }
 
+void AGASRPG_EnemyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+}
+
 void AGASRPG_EnemyCharacter::HighlightActor()
 {
 	GetMesh()->SetRenderCustomDepth(true);
@@ -36,4 +43,6 @@ void AGASRPG_EnemyCharacter::UnhighlightActor()
 		WeaponMesh->SetRenderCustomDepth(false);
 	}
 }
+
+
 

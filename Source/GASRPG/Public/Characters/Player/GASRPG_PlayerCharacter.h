@@ -21,10 +21,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GASRPG|Movement")
 	float RotationRate { 540.f };
 	
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> CameraBoom;
+	
+	void InitAbilityActorInfo();
 };
+
+
+
+
+
