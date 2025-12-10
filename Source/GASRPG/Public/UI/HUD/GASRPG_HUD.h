@@ -20,7 +20,6 @@ public:
 	UPROPERTY()
 	TObjectPtr<UGASRPG_UserWidget> OverlayWidget;
 	
-	UPROPERTY()
 	UGASRPG_OverlayWidgetController* GetOverlayWidgetController(const FWCParams& WCParams);
 	
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);

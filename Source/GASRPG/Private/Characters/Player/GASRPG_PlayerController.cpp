@@ -42,9 +42,10 @@ void AGASRPG_PlayerController::BeginPlay()
 	
 	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, CursorTraceRate, true);
 	
-	UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) };
-	check(Subsystem);
-	Subsystem->AddMappingContext(GASRPGContext, 0);
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) })
+	{
+		Subsystem->AddMappingContext(GASRPGContext, 0);
+	}
 	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
