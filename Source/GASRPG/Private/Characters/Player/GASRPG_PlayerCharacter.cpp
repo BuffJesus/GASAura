@@ -7,6 +7,7 @@
 #include "Characters/Player/GASRPG_PlayerState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "UI/HUD/GASRPG_HUD.h"
 
 AGASRPG_PlayerCharacter::AGASRPG_PlayerCharacter()
 {
@@ -41,6 +42,15 @@ void AGASRPG_PlayerCharacter::InitAbilityActorInfo()
 		AbilitySystemComponent = PS->GetAbilitySystemComponent();
 		AbilitySystemComponent->InitAbilityActorInfo(PS, this);
 		AttributeSet = PS->GetAttributeSet();
+		
+		// Init overlay, all params should be valid
+		if (APlayerController* PC { Cast<APlayerController>(GetController()) })
+		{
+			if (AGASRPG_HUD* HUD { Cast<AGASRPG_HUD>(PC->GetHUD()) })
+			{
+				HUD->InitOverlay(PC, PS, AbilitySystemComponent, AttributeSet);
+			}
+		}
 	}
 }
 
