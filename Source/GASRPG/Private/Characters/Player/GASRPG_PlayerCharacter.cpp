@@ -42,9 +42,10 @@ void AGASRPG_PlayerCharacter::InitAbilityActorInfo()
 		AbilitySystemComponent = PS->GetAbilitySystemComponent();
 		AbilitySystemComponent->InitAbilityActorInfo(PS, this);
 		AttributeSet = PS->GetAttributeSet();
+		APlayerController* PC { Cast<APlayerController>(GetController()) };
 		
 		// Init overlay, all params should be valid
-		if (APlayerController* PC { Cast<APlayerController>(GetController()) })
+		if (PC)
 		{
 			if (AGASRPG_HUD* HUD { Cast<AGASRPG_HUD>(PC->GetHUD()) })
 			{
