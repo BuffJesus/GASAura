@@ -7,7 +7,7 @@
 void UGASRPG_OverlayWidgetController::BroadcastInitialValues()
 {
 	const UGASRPG_AttributeSet* GASRPG_AttributeSet { Cast<UGASRPG_AttributeSet>(AttributeSet) };
-	if (GASRPG_AttributeSet == nullptr) return;
+	// if (GASRPG_AttributeSet == nullptr) return;
 
 	OnHealthChanged.Broadcast(GASRPG_AttributeSet->GetHealth());
 	OnMaxHealthChanged.Broadcast(GASRPG_AttributeSet->GetMaxHealth());

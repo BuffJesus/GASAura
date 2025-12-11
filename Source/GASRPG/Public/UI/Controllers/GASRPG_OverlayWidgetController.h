@@ -14,7 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, N
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class GASRPG_API UGASRPG_OverlayWidgetController : public UGASRPG_WidgetController
 {
 	GENERATED_BODY()
