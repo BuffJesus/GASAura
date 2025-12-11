@@ -27,8 +27,9 @@ void AGASRPG_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilityS
 	
 	const FWCParams WCParams { PC, PS, ASC, AS };
 	UGASRPG_OverlayWidgetController* WidgetController { GetOverlayWidgetController(WCParams) };
-	OverlayWidget->SetWidgetController(WidgetController);
 	
+	OverlayWidget->SetWidgetController(WidgetController);
+	WidgetController->BroadcastInitialValues();
 	Widget->AddToViewport();
 }
 
