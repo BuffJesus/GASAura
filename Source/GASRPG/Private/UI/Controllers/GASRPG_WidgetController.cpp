@@ -10,3 +10,8 @@ void UGASRPG_WidgetController::SetWCParams(const FWCParams& WCParams)
 	AbilitySystemComponent = WCParams.AbilitySystemComponent;
 	AttributeSet = WCParams.AttributeSet;
 }
+
+void UGASRPG_WidgetController::BroadcastInitialValues()
+{
+	// Override in child classes
+}

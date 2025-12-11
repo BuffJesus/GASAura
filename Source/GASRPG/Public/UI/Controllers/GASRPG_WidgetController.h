@@ -42,6 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWCParams(const FWCParams& WCParams);
 	
+	virtual void BroadcastInitialValues();
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "GASRPG|UI|Controller")
 	TObjectPtr<APlayerController> PlayerController { nullptr };
