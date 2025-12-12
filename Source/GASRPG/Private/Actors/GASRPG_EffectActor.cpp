@@ -23,6 +23,8 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 	UGASRPG_AbilitySystemComponent* TargetASC { (Cast<UGASRPG_AbilitySystemComponent>(
 		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor))) };
 	
+	checkf(EffectClass, TEXT("EffectClass cannot be null"));
+	
 	if (TargetASC)
 	{
 		FGameplayEffectContextHandle EffectContextHandle { TargetASC->MakeEffectContext() };

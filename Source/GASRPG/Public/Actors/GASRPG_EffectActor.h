@@ -19,10 +19,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, meta = (HideSelfPin = "true"))
 	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> EffectClass);
 	
-	UPROPERTY(EditAnywhere, Category = "GASRPG|Effects")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	TSubclassOf<UGameplayEffect> InstantEffectClass;
 	
 };
