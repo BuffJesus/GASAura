@@ -30,6 +30,7 @@ void AGASRPG_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilityS
 	
 	OverlayWidget->SetWidgetController(WidgetController);
 	WidgetController->BroadcastInitialValues();
+	WidgetController->BindCallbacksToDependencies();
 	Widget->AddToViewport();
 }
 
