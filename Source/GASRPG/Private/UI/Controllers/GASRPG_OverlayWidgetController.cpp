@@ -14,8 +14,40 @@ void UGASRPG_OverlayWidgetController::BroadcastInitialValues()
 	OnManaChanged.Broadcast(GASRPG_AttributeSet->GetMana());
 	OnMaxManaChanged.Broadcast(GASRPG_AttributeSet->GetMaxMana());
 	
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Health: %f"), GASRPG_AttributeSet->GetHealth()));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Max Health: %f"), GASRPG_AttributeSet->GetMaxHealth()));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Mana: %f"), GASRPG_AttributeSet->GetMana()));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Max Mana: %f"), GASRPG_AttributeSet->GetMaxMana()));
+}
+
+void UGASRPG_OverlayWidgetController::BindCallbacksToDependencies()
+{
+	const UGASRPG_AttributeSet* GASRPG_AttributeSet{ Cast<UGASRPG_AttributeSet>(AttributeSet) };
+
+	auto BindAttributeChanged = [this](const FGameplayAttribute& Attribute, auto Callback)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute)
+			.AddUObject(this, Callback);
+	};
+
+	BindAttributeChanged(GASRPG_AttributeSet->GetHealthAttribute(),    &ThisClass::HealthChanged);
+	BindAttributeChanged(GASRPG_AttributeSet->GetMaxHealthAttribute(), &ThisClass::MaxHealthChanged);
+	BindAttributeChanged(GASRPG_AttributeSet->GetManaAttribute(),      &ThisClass::ManaChanged);
+	BindAttributeChanged(GASRPG_AttributeSet->GetMaxManaAttribute(),   &ThisClass::MaxManaChanged);
+}
+
+void UGASRPG_OverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
+{
+	OnHealthChanged.Broadcast(Data.NewValue);
+}
+
+void UGASRPG_OverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
+{
+	OnMaxHealthChanged.Broadcast(Data.NewValue);
+}
+
+void UGASRPG_OverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) const
+{
+	OnManaChanged.Broadcast(Data.NewValue);
+}
+
+void UGASRPG_OverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
+{
+	OnMaxManaChanged.Broadcast(Data.NewValue);
 }

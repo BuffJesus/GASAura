@@ -43,6 +43,7 @@ public:
 	void SetWCParams(const FWCParams& WCParams);
 	
 	virtual void BroadcastInitialValues();
+	virtual void BindCallbacksToDependencies();
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "GASRPG|UI|Controller")

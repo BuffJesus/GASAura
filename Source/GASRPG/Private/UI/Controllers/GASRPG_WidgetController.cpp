@@ -15,3 +15,8 @@ void UGASRPG_WidgetController::BroadcastInitialValues()
 {
 	// Override in child classes
 }
+
+void UGASRPG_WidgetController::BindCallbacksToDependencies()
+{
+	// Override in child classes
+}
