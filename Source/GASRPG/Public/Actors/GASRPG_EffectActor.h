@@ -6,8 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "GASRPG_EffectActor.generated.h"
 
-class USphereComponent;
-class UStaticMeshComponent;
+class UGameplayEffect;
 
 UCLASS()
 class GASRPG_API AGASRPG_EffectActor : public AActor
@@ -17,20 +16,13 @@ class GASRPG_API AGASRPG_EffectActor : public AActor
 public:
 	AGASRPG_EffectActor();
 	
-	UFUNCTION()
-	virtual void OnOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	UFUNCTION()
-	virtual void EndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-	
 protected:
 	virtual void BeginPlay() override;
 	
-private:
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> CollisionSphere;
+	UFUNCTION(BlueprintCallable)
+	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> EffectClass);
 	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> Mesh;
-
+	UPROPERTY(EditAnywhere, Category = "GASRPG|Effects")
+	TSubclassOf<UGameplayEffect> InstantEffectClass;
+	
 };
