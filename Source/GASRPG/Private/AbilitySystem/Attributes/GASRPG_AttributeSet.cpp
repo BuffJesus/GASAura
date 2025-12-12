@@ -7,9 +7,9 @@
 
 UGASRPG_AttributeSet::UGASRPG_AttributeSet()
 {
-	InitHealth(100.f);
-	InitMana(100.f);
+	InitHealth(10.f);
 	InitMaxHealth(100.f);
+	InitMana(10.f);
 	InitMaxMana(100.f);
 }
 
