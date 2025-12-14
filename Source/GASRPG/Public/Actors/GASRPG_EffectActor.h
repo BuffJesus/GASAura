@@ -6,8 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "GASRPG_EffectActor.generated.h"
 
+class UAbilitySystemComponent;
+struct FActiveGameplayEffectHandle;
 class UGameplayEffect;
 
+UENUM(BlueprintType)
 enum class EEffectApplicationPolicy : uint8
 {
 	ApplyOnOverlap,
@@ -15,6 +18,7 @@ enum class EEffectApplicationPolicy : uint8
 	DoNotApply
 };
 
+UENUM(BlueprintType)
 enum class EEffectRemovalPolicy : uint8
 {
 	RemoveOnEndOverlap,
@@ -42,7 +46,7 @@ protected:
 	void OnEndOverlap(AActor* TargetActor);
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
-	bool bDestroyOnEffectRemoval { false };
+	bool bDestroyOnEffectApplication { false };
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	TSubclassOf<UGameplayEffect> InstantEffectClass;
@@ -64,5 +68,9 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy { EEffectRemovalPolicy::RemoveOnEndOverlap };
-	
+
+private:
+	// Key: Actor's UniqueID, Value: Array of effect handles applied to that actor
+	// This allows O(1) lookup by actor AND supports multiple effects per actor
+	TMap<uint32, TArray<FActiveGameplayEffectHandle>> ActiveEffectHandles;
 };
