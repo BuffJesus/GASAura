@@ -49,19 +49,19 @@ protected:
 	bool bDestroyOnEffectApplication { false };
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
-	TSubclassOf<UGameplayEffect> InstantEffectClass;
+	TArray<TSubclassOf<UGameplayEffect>> InstantEffectClass;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	EEffectApplicationPolicy InstantEffectApplicationPolicy { EEffectApplicationPolicy::DoNotApply };
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
-	TSubclassOf<UGameplayEffect> DurationEffectClass;
+	TArray<TSubclassOf<UGameplayEffect>> DurationEffectClass;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	EEffectApplicationPolicy DurationEffectApplicationPolicy { EEffectApplicationPolicy::DoNotApply };
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
-	TSubclassOf<UGameplayEffect> InfiniteEffectClass;
+	TArray<TSubclassOf<UGameplayEffect>> InfiniteEffectClass;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	EEffectApplicationPolicy InfiniteEffectApplicationPolicy { EEffectApplicationPolicy::DoNotApply };

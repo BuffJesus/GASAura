@@ -31,7 +31,6 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 	const bool bIsInfinite { EffectSpecHandle.Data->Def->DurationPolicy == EGameplayEffectDurationType::Infinite };
 	if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
-		// O(1) lookup by actor UID, supports multiple effects per actor
 		const uint32 ActorUID { TargetActor->GetUniqueID() };
 		ActiveEffectHandles.FindOrAdd(ActorUID).Add(ActiveEffectHandle);
 	}
@@ -44,34 +43,38 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 
 void AGASRPG_EffectActor::OnOverlap(AActor* TargetActor)
 {
-	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
+	auto ApplyEffects = [this, TargetActor](EEffectApplicationPolicy Policy, const TArray<TSubclassOf<UGameplayEffect>>& EffectClasses)
 	{
-		ApplyEffectToTarget(TargetActor, InstantEffectClass);
-	}
-	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
-	{
-		ApplyEffectToTarget(TargetActor, DurationEffectClass);
-	}
-	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)
-	{
-		ApplyEffectToTarget(TargetActor, InfiniteEffectClass);
-	}
+		if (Policy == EEffectApplicationPolicy::ApplyOnOverlap)
+		{
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : EffectClasses)
+			{
+				ApplyEffectToTarget(TargetActor, EffectClass);
+			}
+		}
+	};
+	
+	ApplyEffects(InstantEffectApplicationPolicy, InstantEffectClass);
+	ApplyEffects(DurationEffectApplicationPolicy, DurationEffectClass);
+	ApplyEffects(InfiniteEffectApplicationPolicy, InfiniteEffectClass);
 }
 
 void AGASRPG_EffectActor::OnEndOverlap(AActor* TargetActor)
 {
-	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+	auto ApplyEffects = [this, TargetActor](EEffectApplicationPolicy Policy, const TArray<TSubclassOf<UGameplayEffect>>& EffectClasses)
 	{
-		ApplyEffectToTarget(TargetActor, InstantEffectClass);
-	}
-	if (DurationEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
-	{
-		ApplyEffectToTarget(TargetActor, DurationEffectClass);
-	}
-	if (InfiniteEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
-	{
-		ApplyEffectToTarget(TargetActor, InfiniteEffectClass);
-	}
+		if (Policy == EEffectApplicationPolicy::ApplyOnEndOverlap)
+		{
+			for (const TSubclassOf<UGameplayEffect>& EffectClass : EffectClasses)
+			{
+				ApplyEffectToTarget(TargetActor, EffectClass);
+			}
+		}
+	};
+	
+	ApplyEffects(InstantEffectApplicationPolicy, InstantEffectClass);
+	ApplyEffects(DurationEffectApplicationPolicy, DurationEffectClass);
+	ApplyEffects(InfiniteEffectApplicationPolicy, InfiniteEffectClass);
 	
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
@@ -80,7 +83,6 @@ void AGASRPG_EffectActor::OnEndOverlap(AActor* TargetActor)
 		
 		const uint32 ActorUID { TargetActor->GetUniqueID() };
 		
-		// O(1) lookup - no iteration over unrelated entries
 		if (TArray<FActiveGameplayEffectHandle>* EffectHandles { ActiveEffectHandles.Find(ActorUID) })
 		{
 			for (const FActiveGameplayEffectHandle& Handle : *EffectHandles)
