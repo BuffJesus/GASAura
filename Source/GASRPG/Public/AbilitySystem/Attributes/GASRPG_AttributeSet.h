@@ -7,6 +7,40 @@
 #include "AttributeSet.h"
 #include "GASRPG_AttributeSet.generated.h"
 
+USTRUCT()
+struct FEffectProperties
+{
+	GENERATED_BODY()
+	
+	FEffectProperties() {}
+	
+	FGameplayEffectContextHandle EffectContextHandle;
+	
+	UPROPERTY()
+	UAbilitySystemComponent* SourceASC { nullptr };
+	
+	UPROPERTY()
+	AActor* SourceAvatarActor { nullptr };
+	
+	UPROPERTY()
+	AController* SourceController { nullptr };
+	
+	UPROPERTY()
+	ACharacter* SourceCharacter { nullptr };
+	
+	UPROPERTY()
+	UAbilitySystemComponent* TargetASC { nullptr };
+	
+	UPROPERTY()
+	AActor* TargetAvatarActor { nullptr };
+	
+	UPROPERTY()
+	AController* TargetController { nullptr };
+	
+	UPROPERTY()
+	ACharacter* TargetCharacter { nullptr };
+};
+
 /**
  * 
  */
@@ -18,6 +52,8 @@ class GASRPG_API UGASRPG_AttributeSet : public UAttributeSet
 public:
 	UGASRPG_AttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 	
 #pragma region Vital Attribute Declaration
 	
@@ -51,4 +87,7 @@ public:
 	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	
 #pragma endregion	
+	
+private:
+	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 };
