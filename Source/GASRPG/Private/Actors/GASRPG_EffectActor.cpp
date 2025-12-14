@@ -34,4 +34,14 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 	}
 }
 
+void AGASRPG_EffectActor::OnOverlap(AActor* TargetActor)
+{
+	
+}
+
+void AGASRPG_EffectActor::OnEndOverlap(AActor* TargetActor)
+{
+	
+}
+
 
