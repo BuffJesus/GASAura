@@ -68,6 +68,9 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	EEffectRemovalPolicy InfiniteEffectRemovalPolicy { EEffectRemovalPolicy::RemoveOnEndOverlap };
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
+	float ActorLevel { 1.f };
 
 private:
 	// Key: Actor's UniqueID, Value: Array of effect handles applied to that actor

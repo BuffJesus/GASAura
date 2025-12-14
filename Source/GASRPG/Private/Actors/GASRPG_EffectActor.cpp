@@ -25,7 +25,7 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 	FGameplayEffectContextHandle EffectContextHandle { TargetASC->MakeEffectContext() };
 	EffectContextHandle.AddSourceObject(this);
 	
-	const FGameplayEffectSpecHandle EffectSpecHandle { TargetASC->MakeOutgoingSpec(EffectClass, 1.f, EffectContextHandle) };
+	const FGameplayEffectSpecHandle EffectSpecHandle { TargetASC->MakeOutgoingSpec(EffectClass, ActorLevel, EffectContextHandle) };
 	const FActiveGameplayEffectHandle ActiveEffectHandle { TargetASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get()) };
 	
 	const bool bIsInfinite { EffectSpecHandle.Data->Def->DurationPolicy == EGameplayEffectDurationType::Infinite };
