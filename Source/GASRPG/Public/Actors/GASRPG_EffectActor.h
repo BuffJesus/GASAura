@@ -25,4 +25,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
 	TSubclassOf<UGameplayEffect> InstantEffectClass;
 	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|Effects")
+	TSubclassOf<UGameplayEffect> DurationEffectClass;
+	
 };
