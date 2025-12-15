@@ -3,6 +3,7 @@
 
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Characters/Player/GASRPG_PlayerState.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -41,11 +42,11 @@ void AGASRPG_PlayerCharacter::InitAbilityActorInfo()
 	{
 		AbilitySystemComponent = PS->GetAbilitySystemComponent();
 		AbilitySystemComponent->InitAbilityActorInfo(PS, this);
+		Cast<UGASRPG_AbilitySystemComponent>(PS->GetAbilitySystemComponent())->AbilityActorInfoSet();
 		AttributeSet = PS->GetAttributeSet();
-		APlayerController* PC { Cast<APlayerController>(GetController()) };
-		
+
 		// Init overlay, all params should be valid
-		if (PC)
+		if (APlayerController* PC { Cast<APlayerController>(GetController()) })
 		{
 			if (AGASRPG_HUD* HUD { Cast<AGASRPG_HUD>(PC->GetHUD()) })
 			{

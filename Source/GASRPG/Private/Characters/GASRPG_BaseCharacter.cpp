@@ -16,3 +16,8 @@ void AGASRPG_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 }
+
+void AGASRPG_BaseCharacter::InitAbilityActorInfo()
+{
+
+}

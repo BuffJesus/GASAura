@@ -31,7 +31,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> CameraBoom;
 	
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 };
 
 
