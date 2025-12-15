@@ -6,13 +6,18 @@
 
 namespace GASRPG
 {
-	namespace Attributes
+	namespace Attribute
 	{
-		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes)
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attribute)
 		
 		namespace Primary
 		{
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Primary)
+			
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Intelligence)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Resilience)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Strength)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Vigor)
 		}
 		namespace Secondary
 		{

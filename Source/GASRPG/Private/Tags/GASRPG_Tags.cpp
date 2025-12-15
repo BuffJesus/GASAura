@@ -5,31 +5,36 @@
 
 namespace GASRPG
 {
-	namespace Attributes
+	namespace Attribute
 	{
-		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes, "GASRPG.Attributes", "Attributes root")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attribute, "GASRPG.Attribute", "Attribute root")
 		
 		namespace Primary
 		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Primary, "GASRPG.Attributes.Primary", "Primary attribute root")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Primary, "GASRPG.Attribute.Primary", "Primary attribute root")
+			
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Intelligence, "GASRPG.Attribute.Primary.Intelligence", "Increases magical damage")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Resilience, "GASRPG.Attribute.Primary.Resilience", "Increases armor and armor penetration")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Strength, "GASRPG.Attribute.Primary.Strength", "Increases physical damage")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Vigor, "GASRPG.Attribute.Primary.Vigor", "Increases health")
 		}
 		namespace Secondary
 		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Secondary, "GASRPG.Attributes.Secondary", "Secondary attribute root")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Secondary, "GASRPG.Attribute.Secondary", "Secondary attribute root")
 			
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxHealth, "GASRPG.Attributes.Secondary.MaxHealth", "Maximum amount of health obtainable")
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxMana, "GASRPG.Attributes.Secondary.MaxMana", "Maximum amount of mana obtainable")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxHealth, "GASRPG.Attribute.Secondary.MaxHealth", "Maximum amount of health obtainable")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxMana, "GASRPG.Attribute.Secondary.MaxMana", "Maximum amount of mana obtainable")
 		}
 		namespace Resistance
 		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Resistance, "GASRPG.Attributes.Resistance", "Resistance root")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Resistance, "GASRPG.Attribute.Resistance", "Resistance root")
 		}
 		namespace Vital
 		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Vital, "GASRPG.Attributes.Vital", "Vital attribute root")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Vital, "GASRPG.Attribute.Vital", "Vital attribute root")
 			
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Health, "GASRPG.Attributes.Vital.Health", "Amount of damage an Actor can take")
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Mana, "GASRPG.Attributes.Vital.Mana", "Amount of mana an Actor can use")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Health, "GASRPG.Attribute.Vital.Health", "Amount of damage an Actor can take")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Mana, "GASRPG.Attribute.Vital.Mana", "Amount of mana an Actor can use")
 		}
 	}
 }
