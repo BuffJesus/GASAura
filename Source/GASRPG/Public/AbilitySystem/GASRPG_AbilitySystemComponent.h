@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "GASRPG_AbilitySystemComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&)
 
 UCLASS()
 class GASRPG_API UGASRPG_AbilitySystemComponent : public UAbilitySystemComponent
@@ -14,6 +15,8 @@ class GASRPG_API UGASRPG_AbilitySystemComponent : public UAbilitySystemComponent
 	
 public:
 	void AbilityActorInfoSet();
+	
+	FEffectAssetTags EffectAssetTags;
 
 protected:
 	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, 

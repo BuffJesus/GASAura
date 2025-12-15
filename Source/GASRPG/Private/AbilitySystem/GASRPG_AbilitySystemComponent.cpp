@@ -13,8 +13,6 @@ void UGASRPG_AbilitySystemComponent::EffectApplied(UAbilitySystemComponent* Abil
 {
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags(TagContainer);
-	for (const FGameplayTag& Tag : TagContainer)
-	{
-		
-	}
+	
+	EffectAssetTags.Broadcast(TagContainer);
 }
