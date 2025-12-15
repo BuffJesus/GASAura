@@ -18,16 +18,16 @@ namespace GASRPG
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Strength, "GASRPG.Attribute.Primary.Strength", "Increases physical damage")
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Vigor, "GASRPG.Attribute.Primary.Vigor", "Increases health")
 		}
+		namespace Resistance
+		{
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Resistance, "GASRPG.Attribute.Resistance", "Resistance root")
+		}
 		namespace Secondary
 		{
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Secondary, "GASRPG.Attribute.Secondary", "Secondary attribute root")
 			
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxHealth, "GASRPG.Attribute.Secondary.MaxHealth", "Maximum amount of health obtainable")
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxMana, "GASRPG.Attribute.Secondary.MaxMana", "Maximum amount of mana obtainable")
-		}
-		namespace Resistance
-		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Resistance, "GASRPG.Attribute.Resistance", "Resistance root")
 		}
 		namespace Vital
 		{

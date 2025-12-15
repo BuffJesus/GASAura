@@ -19,16 +19,16 @@ namespace GASRPG
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Strength)
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Vigor)
 		}
+		namespace Resistance
+		{
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Resistance)
+		}
 		namespace Secondary
 		{
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Secondary)
 			
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(MaxHealth)
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(MaxMana)
-		}
-		namespace Resistance
-		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Resistance)
 		}
 		namespace Vital
 		{
