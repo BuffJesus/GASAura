@@ -3,14 +3,35 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GASRPG_WidgetController.h"
 #include "GASRPG_OverlayWidgetController.generated.h"
 
+class UGASRPG_UserWidget;
 struct FOnAttributeChangeData;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, NewMaxHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, NewMaxMana);
+
+USTRUCT(BlueprintType)
+struct FUIWidgetRow : public FTableRowBase
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (Categories = "GASRPG.Message"))
+	FGameplayTag MessageTag { FGameplayTag() };
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText MessageText { FText() };
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UGASRPG_UserWidget> MessageWidget { nullptr };
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* MessageImage { nullptr };
+};
 
 /**
  * 
@@ -37,6 +58,9 @@ public:
 	FOnMaxManaChangedSignature OnMaxManaChanged;
 	
 protected:
+	UPROPERTY(EditDefaultsOnly, meta = (RequiredAssetDataTags = "RowStructure=/Script/GASRPG.UIWidgetRow"), Category = "GASRPG|WidgetData")	
+	TObjectPtr<UDataTable> MessageWidgetDataTable { nullptr };
+	
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
 	void ManaChanged(const FOnAttributeChangeData& Data) const;
