@@ -7,6 +7,7 @@
 AGASRPG_EffectActor::AGASRPG_EffectActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	bReplicates = true;
 	SetRootComponent(CreateDefaultSubobject<USceneComponent>("Root"));
 }
 
@@ -17,7 +18,7 @@ void AGASRPG_EffectActor::BeginPlay()
 
 void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> EffectClass)
 {
-	if (!IsValid(TargetActor) || !EffectClass) { return; }
+	if (!HasAuthority() || !IsValid(TargetActor) || !EffectClass) { return; }
 	
 	UAbilitySystemComponent* TargetASC { UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor) };
 	if (!TargetASC) { return; }
@@ -43,6 +44,8 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 
 void AGASRPG_EffectActor::OnOverlap(AActor* TargetActor)
 {
+	if (!HasAuthority() || !IsValid(TargetActor) || TargetActor == this) { return; }
+	
 	auto ApplyEffects = [this, TargetActor](EEffectApplicationPolicy Policy, const TArray<TSubclassOf<UGameplayEffect>>& EffectClasses)
 	{
 		if (Policy == EEffectApplicationPolicy::ApplyOnOverlap)
@@ -61,6 +64,8 @@ void AGASRPG_EffectActor::OnOverlap(AActor* TargetActor)
 
 void AGASRPG_EffectActor::OnEndOverlap(AActor* TargetActor)
 {
+	if (!HasAuthority() || !IsValid(TargetActor) || TargetActor == this) { return; }
+	
 	auto ApplyEffects = [this, TargetActor](EEffectApplicationPolicy Policy, const TArray<TSubclassOf<UGameplayEffect>>& EffectClasses)
 	{
 		if (Policy == EEffectApplicationPolicy::ApplyOnEndOverlap)
