@@ -8,11 +8,11 @@ namespace GASRPG
 {
 	namespace Attribute
 	{
-		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attribute)
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(AttributeRoot)
 		
 		namespace Primary
 		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Primary)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(PrimaryRoot)
 			
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Intelligence)
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Resilience)
@@ -21,18 +21,18 @@ namespace GASRPG
 		}
 		namespace Resistance
 		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Resistance)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(ResistanceRoot)
 		}
 		namespace Secondary
 		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Secondary)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(SecondaryRoot)
 			
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(MaxHealth)
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(MaxMana)
 		}
 		namespace Vital
 		{
-			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Vital)
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(VitalRoot)
 			
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Health)
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Mana)
@@ -40,7 +40,7 @@ namespace GASRPG
 	}
 	namespace Message
 	{
-		UE_DECLARE_GAMEPLAY_TAG_EXTERN(Message)
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(MessageRoot)
 		
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(HealthPotion)
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(HealthCrystal)

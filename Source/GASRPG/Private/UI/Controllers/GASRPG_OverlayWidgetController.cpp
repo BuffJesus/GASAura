@@ -38,7 +38,7 @@ void UGASRPG_OverlayWidgetController::BindCallbacksToDependencies()
 		{
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				if (Tag.MatchesTag(GASRPG::Message::Message))
+				if (Tag.MatchesTag(GASRPG::Message::MessageRoot))
 				{
 					const FUIWidgetRow* Row { GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag) };
 					MessageWidgetRowDelegate.Broadcast(*Row);
