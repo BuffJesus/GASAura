@@ -73,7 +73,7 @@ protected:
 	float ActorLevel { 1.f };
 
 private:
-	// Key: Actor's UniqueID, Value: Array of effect handles applied to that actor
-	// This allows O(1) lookup by actor AND supports multiple effects per actor
-	TMap<uint32, TArray<FActiveGameplayEffectHandle>> ActiveEffectHandles;
+	// Use TWeakObjectPtr to prevent holding strong references to actors that might be destroyed
+	// This is safe for multiplayer as we're using actual object pointers, not IDs
+	TMap<TWeakObjectPtr<AActor>, TArray<FActiveGameplayEffectHandle>> ActiveEffectHandles;
 };

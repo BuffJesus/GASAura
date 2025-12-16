@@ -32,8 +32,8 @@ void AGASRPG_EffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<U
 	const bool bIsInfinite { EffectSpecHandle.Data->Def->DurationPolicy == EGameplayEffectDurationType::Infinite };
 	if (bIsInfinite && InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
-		const uint32 ActorUID { TargetActor->GetUniqueID() };
-		ActiveEffectHandles.FindOrAdd(ActorUID).Add(ActiveEffectHandle);
+		TWeakObjectPtr<AActor> WeakTargetActor { TargetActor };
+		ActiveEffectHandles.FindOrAdd(WeakTargetActor).Add(ActiveEffectHandle);
 	}
 	
 	if (bDestroyOnEffectApplication)
@@ -86,15 +86,24 @@ void AGASRPG_EffectActor::OnEndOverlap(AActor* TargetActor)
 		UAbilitySystemComponent* TargetASC { UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor) };
 		if (!IsValid(TargetASC)) { return; }
 		
-		const uint32 ActorUID { TargetActor->GetUniqueID() };
+		TWeakObjectPtr<AActor> WeakTargetActor { TargetActor };
 		
-		if (TArray<FActiveGameplayEffectHandle>* EffectHandles { ActiveEffectHandles.Find(ActorUID) })
+		// Clean up any invalid weak pointers while we're iterating
+		for (auto It = ActiveEffectHandles.CreateIterator(); It; ++It)
+		{
+			if (!It.Key().IsValid())
+			{
+				It.RemoveCurrent();
+			}
+		}
+		
+		if (TArray<FActiveGameplayEffectHandle>* EffectHandles { ActiveEffectHandles.Find(WeakTargetActor) })
 		{
 			for (const FActiveGameplayEffectHandle& Handle : *EffectHandles)
 			{
 				TargetASC->RemoveActiveGameplayEffect(Handle, 1);
 			}
-			ActiveEffectHandles.Remove(ActorUID);
+			ActiveEffectHandles.Remove(WeakTargetActor);
 		}
 	}
 }
