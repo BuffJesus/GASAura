@@ -2,9 +2,9 @@
 
 
 #include "UI/Controllers/GASRPG_OverlayWidgetController.h"
-
 #include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
+#include "AbilitySystem/Tags/GASRPG_Tags.h"
 
 void UGASRPG_OverlayWidgetController::BroadcastInitialValues()
 {
@@ -34,11 +34,15 @@ void UGASRPG_OverlayWidgetController::BindCallbacksToDependencies()
 	BindAttributeChanged(GASRPG_AttributeSet->GetMaxManaAttribute(),   &ThisClass::MaxManaChanged);
 	
 	Cast<UGASRPG_AbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
-		[](const FGameplayTagContainer& AssetTags)
+		[this](const FGameplayTagContainer& AssetTags)
 		{
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Effect Tag: %s"), *Tag.ToString()));
+				if (Tag.MatchesTag(GASRPG::Message::Message))
+				{
+					const FUIWidgetRow* Row { GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag) };
+					MessageWidgetRowDelegate.Broadcast(*Row);
+				}
 			}
 		}	
 	);

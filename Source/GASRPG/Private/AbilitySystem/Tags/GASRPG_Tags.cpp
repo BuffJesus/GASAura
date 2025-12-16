@@ -36,14 +36,14 @@ namespace GASRPG
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Health, "GASRPG.Attribute.Vital.Health", "Amount of damage an Actor can take")
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Mana, "GASRPG.Attribute.Vital.Mana", "Amount of mana an Actor can use")
 		}
-		namespace Message
-		{
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Message, "GASRPG.Message", "Message root")
+	}
+	namespace Message
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Message, "GASRPG.Message", "Message root")
 			
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HealthPotion, "GASRPG.Message.HealthPotion", "Health potion message")
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HealthCrystal, "GASRPG.Message.HealthCrystal", "Health crystal message")
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(ManaPotion, "GASRPG.Message.ManaPotion", "Mana potion message")
-			UE_DEFINE_GAMEPLAY_TAG_COMMENT(ManaCrystal, "GASRPG.Message.ManaCrystal", "Mana crystal message")
-		}
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(HealthPotion, "GASRPG.Message.HealthPotion", "Health potion message")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(HealthCrystal, "GASRPG.Message.HealthCrystal", "Health crystal message")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(ManaPotion, "GASRPG.Message.ManaPotion", "Mana potion message")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(ManaCrystal, "GASRPG.Message.ManaCrystal", "Mana crystal message")
 	}
 }
