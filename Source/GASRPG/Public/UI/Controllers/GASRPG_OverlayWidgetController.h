@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "GameplayTagContainer.h"
 #include "GASRPG_WidgetController.h"
 #include "GASRPG_OverlayWidgetController.generated.h"
 
+struct FGameplayAttribute;
 class UGASRPG_UserWidget;
 struct FOnAttributeChangeData;
 
@@ -28,10 +30,7 @@ struct FUIWidgetRow : public FTableRowBase
 	UTexture2D* MessageImage { nullptr };
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, NewHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, NewMaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, NewMaxMana);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangedSignature, float, NewValue);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 
@@ -48,16 +47,16 @@ public:
 	virtual void BindCallbacksToDependencies() override;
 	
 	UPROPERTY(BlueprintAssignable, Category = "GASRPG|GAS|Attributes")
-	FOnHealthChangedSignature OnHealthChanged;
+	FOnAttributeChangedSignature OnHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "GASRPG|GAS|Attributes")
-	FOnMaxHealthChangedSignature OnMaxHealthChanged;
+	FOnAttributeChangedSignature OnMaxHealthChanged;
 	
 	UPROPERTY(BlueprintAssignable, Category = "GASRPG|GAS|Attributes")
-	FOnManaChangedSignature OnManaChanged;
+	FOnAttributeChangedSignature OnManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category = "GASRPG|GAS|Attributes")
-	FOnMaxManaChangedSignature OnMaxManaChanged;
+	FOnAttributeChangedSignature OnMaxManaChanged;
 	
 	UPROPERTY(BlueprintAssignable, Category = "GASRPG|GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
@@ -66,17 +65,25 @@ protected:
 	UPROPERTY(EditDefaultsOnly, meta = (RequiredAssetDataTags = "RowStructure=/Script/GASRPG.UIWidgetRow"), Category = "GASRPG|WidgetData")	
 	TObjectPtr<UDataTable> MessageWidgetDataTable { nullptr };
 	
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
-	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
-	void ManaChanged(const FOnAttributeChangeData& Data) const;
-	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
-	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
+	
+	template <typename TDelegate>
+	void BindAttributeChangeDelegate(const FGameplayAttribute& Attribute, TDelegate& Delegate);
 };
 
 template <typename T>
 T* UGASRPG_OverlayWidgetController::GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag)
 {
 	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+}
+
+template <typename TDelegate>
+void UGASRPG_OverlayWidgetController::BindAttributeChangeDelegate(const FGameplayAttribute& Attribute, TDelegate& Delegate)
+{
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute)
+		.AddLambda([&Delegate](const FOnAttributeChangeData& Data)
+		{
+			Delegate.Broadcast(Data.NewValue);
+		});
 }

@@ -22,23 +22,21 @@ void UGASRPG_OverlayWidgetController::BindCallbacksToDependencies()
 {
 	const UGASRPG_AttributeSet* GASRPG_AttributeSet{ Cast<UGASRPG_AttributeSet>(AttributeSet) };
 
-	auto BindAttributeChanged = [this](const FGameplayAttribute& Attribute, auto Callback)
-	{
-		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Attribute)
-			.AddUObject(this, Callback);
-	};
-
-	BindAttributeChanged(GASRPG_AttributeSet->GetHealthAttribute(),    &ThisClass::HealthChanged);
-	BindAttributeChanged(GASRPG_AttributeSet->GetMaxHealthAttribute(), &ThisClass::MaxHealthChanged);
-	BindAttributeChanged(GASRPG_AttributeSet->GetManaAttribute(),      &ThisClass::ManaChanged);
-	BindAttributeChanged(GASRPG_AttributeSet->GetMaxManaAttribute(),   &ThisClass::MaxManaChanged);
+	BindAttributeChangeDelegate(GASRPG_AttributeSet->GetHealthAttribute(),    OnHealthChanged);
+	BindAttributeChangeDelegate(GASRPG_AttributeSet->GetMaxHealthAttribute(), OnMaxHealthChanged);
+	BindAttributeChangeDelegate(GASRPG_AttributeSet->GetManaAttribute(),      OnManaChanged);
+	BindAttributeChangeDelegate(GASRPG_AttributeSet->GetMaxManaAttribute(),   OnMaxManaChanged);
 	
 	Cast<UGASRPG_AbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
 		{
 			for (const FGameplayTag& Tag : AssetTags)
 			{
-				if (Tag.MatchesTag(GASRPG::Message::MessageRoot))
+				// Use the parent Message tag
+				const FGameplayTag MessageTag { GASRPG::Message::MessageRoot };
+				
+				// Check if this tag matches "Aura.Message" or any child
+				if (Tag.MatchesTag(MessageTag))
 				{
 					const FUIWidgetRow* Row { GetDataTableRowByTag<FUIWidgetRow>(MessageWidgetDataTable, Tag) };
 					MessageWidgetRowDelegate.Broadcast(*Row);
@@ -46,24 +44,4 @@ void UGASRPG_OverlayWidgetController::BindCallbacksToDependencies()
 			}
 		}	
 	);
-}
-
-void UGASRPG_OverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UGASRPG_OverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UGASRPG_OverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UGASRPG_OverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxManaChanged.Broadcast(Data.NewValue);
 }
