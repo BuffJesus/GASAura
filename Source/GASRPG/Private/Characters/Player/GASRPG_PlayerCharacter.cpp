@@ -53,7 +53,7 @@ void AGASRPG_PlayerCharacter::InitAbilityActorInfo()
 				HUD->InitOverlay(PC, PS, AbilitySystemComponent, AttributeSet);
 			}
 		}
-		InitializePrimaryAttributes();
+		InitializeDefaultAttributes();
 	}
 }
 

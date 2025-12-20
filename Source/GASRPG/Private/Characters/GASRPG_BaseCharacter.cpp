@@ -24,12 +24,20 @@ void AGASRPG_BaseCharacter::InitAbilityActorInfo()
 
 }
 
-void AGASRPG_BaseCharacter::InitializePrimaryAttributes() const
+void AGASRPG_BaseCharacter::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> EffectClass, float Level) const
 {
 	check(IsValid(GetAbilitySystemComponent()));
-	checkf(IsValid(DefaultPrimaryAttributes), TEXT("DefaultPrimaryAttributes is not set!"));
+	checkf(IsValid(EffectClass), TEXT("EffectClass is not set!"));
 	
 	const FGameplayEffectContextHandle ContextHandle { GetAbilitySystemComponent()->MakeEffectContext() };
-	const FGameplayEffectSpecHandle SpecHandle { GetAbilitySystemComponent()->MakeOutgoingSpec(DefaultPrimaryAttributes, 1.f, ContextHandle) };
+	const FGameplayEffectSpecHandle SpecHandle { GetAbilitySystemComponent()->MakeOutgoingSpec(EffectClass, Level, ContextHandle) };
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
+}
+
+void AGASRPG_BaseCharacter::InitializeDefaultAttributes() const
+{
+	for (const auto& EffectClass : DefaultPrimaryAttributes)
+		ApplyEffectToSelf(EffectClass);
+	for (const auto& EffectClass : DefaultSecondaryAttributes)
+		ApplyEffectToSelf(EffectClass);
 }

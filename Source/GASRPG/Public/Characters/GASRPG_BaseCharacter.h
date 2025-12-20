@@ -42,8 +42,14 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 	
 	virtual void InitAbilityActorInfo();
-	void InitializePrimaryAttributes() const;
+	
+	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> EffectClass, float Level = 1.f) const;
+	void InitializeDefaultAttributes() const;
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
-	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+	TArray<TSubclassOf<UGameplayEffect>> DefaultPrimaryAttributes;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
+	TArray<TSubclassOf<UGameplayEffect>> DefaultSecondaryAttributes;
+	
 };
