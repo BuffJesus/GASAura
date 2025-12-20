@@ -28,6 +28,7 @@ void AGASRPG_EnemyCharacter::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UGASRPG_AbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+	InitializePrimaryAttributes();
 }
 
 void AGASRPG_EnemyCharacter::HighlightActor()

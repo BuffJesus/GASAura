@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "GASRPG_BaseCharacter.generated.h"
 
+class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
@@ -41,4 +42,8 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 	
 	virtual void InitAbilityActorInfo();
+	void InitializePrimaryAttributes() const;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
 };
