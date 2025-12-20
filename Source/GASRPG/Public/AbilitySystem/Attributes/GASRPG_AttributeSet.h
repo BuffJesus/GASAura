@@ -88,6 +88,38 @@ public:
 	
 #pragma region Secondary Attribute Declaration	
 	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Armor);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ArmorPenetration, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData ArmorPenetration;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, ArmorPenetration);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_BlockChance, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData BlockChance;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, BlockChance);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitChance, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData CriticalHitChance;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, CriticalHitChance);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitDamage, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData CriticalHitDamage;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, CriticalHitDamage);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalHitResistance, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData CriticalHitResistance;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, CriticalHitResistance);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegen, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData HealthRegen;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, HealthRegen);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegen, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData ManaRegen;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, ManaRegen);
+	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "GASRPG|Attributes|Secondary")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, MaxHealth);
@@ -118,6 +150,14 @@ public:
 	
 	#pragma region Secondary Attribute Rep
 	
+	UFUNCTION() void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
+	UFUNCTION() void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
+	UFUNCTION() void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
+	UFUNCTION() void OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const;
+	UFUNCTION() void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
+	UFUNCTION() void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
+	UFUNCTION() void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const;
+	UFUNCTION() void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const;
 	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 	
