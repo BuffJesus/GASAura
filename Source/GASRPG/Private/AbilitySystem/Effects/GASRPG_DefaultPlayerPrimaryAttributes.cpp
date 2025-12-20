@@ -7,7 +7,7 @@
 UGASRPG_DefaultPlayerPrimaryAttributes::UGASRPG_DefaultPlayerPrimaryAttributes()
 {
 	AddAttributeModifier(UGASRPG_AttributeSet::GetStrengthAttribute(), 10.f);
-	AddAttributeModifier(UGASRPG_AttributeSet::GetIntelligenceAttribute(), 10.f);
-	AddAttributeModifier(UGASRPG_AttributeSet::GetResilienceAttribute(), 10.f);
-	AddAttributeModifier(UGASRPG_AttributeSet::GetVigorAttribute(), 10.f);
+	AddAttributeModifier(UGASRPG_AttributeSet::GetIntelligenceAttribute(), 17.f);
+	AddAttributeModifier(UGASRPG_AttributeSet::GetResilienceAttribute(), 12.f);
+	AddAttributeModifier(UGASRPG_AttributeSet::GetVigorAttribute(), 9.f);
 }
