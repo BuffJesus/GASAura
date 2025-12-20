@@ -100,14 +100,28 @@ public:
 	
 #pragma region Replication Functions	
 	
-	UFUNCTION() void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
-	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
-	UFUNCTION() void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
-	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	#pragma region Primary Attribute Rep
+	
 	UFUNCTION() void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
 	UFUNCTION() void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
 	UFUNCTION() void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
 	UFUNCTION() void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+	
+	#pragma endregion
+	
+	#pragma region Vital Attribute Rep
+	
+	UFUNCTION() void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
+	UFUNCTION() void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
+	
+	#pragma endregion
+	
+	#pragma region Secondary Attribute Rep
+	
+	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
+	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	
+	#pragma endregion
 	
 #pragma endregion	
 	
