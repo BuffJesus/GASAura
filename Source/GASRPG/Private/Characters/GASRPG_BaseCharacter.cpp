@@ -36,8 +36,12 @@ void AGASRPG_BaseCharacter::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Effec
 
 void AGASRPG_BaseCharacter::InitializeDefaultAttributes() const
 {
+	if (!GetAbilitySystemComponent()) { return; }
+	
 	for (const auto& EffectClass : DefaultPrimaryAttributes)
-		ApplyEffectToSelf(EffectClass);
+		if (IsValid(EffectClass))
+			ApplyEffectToSelf(EffectClass);
 	for (const auto& EffectClass : DefaultSecondaryAttributes)
-		ApplyEffectToSelf(EffectClass);
+		if (IsValid(EffectClass))
+			ApplyEffectToSelf(EffectClass);
 }
