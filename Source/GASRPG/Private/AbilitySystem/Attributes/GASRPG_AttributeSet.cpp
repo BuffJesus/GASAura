@@ -8,14 +8,6 @@
 #include "AbilitySystem/Attributes/GASRPG_AttributeSetMacros.h"
 #include "GameFramework/Character.h"
 
-UGASRPG_AttributeSet::UGASRPG_AttributeSet()
-{
-	InitHealth(10.f);
-	InitMaxHealth(100.f);
-	InitMana(10.f);
-	InitMaxMana(100.f);
-}
-
 void UGASRPG_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -24,7 +16,20 @@ void UGASRPG_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxHealth);
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Mana);
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxMana);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Strength);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Intelligence);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Resilience);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Vigor);
 }
+
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Health);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxHealth);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Mana);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxMana);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Strength);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Intelligence);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Resilience);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Vigor);
 
 void UGASRPG_AttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
 {
@@ -109,9 +114,6 @@ void UGASRPG_AttributeSet::SetEffectProperties(const FGameplayEffectModCallbackD
 	}
 }
 
-IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Health);
-IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxHealth);
-IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Mana);
-IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxMana);
+
 
 

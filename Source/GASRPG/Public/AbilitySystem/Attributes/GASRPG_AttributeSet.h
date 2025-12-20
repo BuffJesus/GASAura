@@ -50,10 +50,29 @@ class GASRPG_API UGASRPG_AttributeSet : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
-	UGASRPG_AttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const override;
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+	
+#pragma region Primary Attribute Declaration
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "GASRPG|Attributes|Primary")
+	FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Strength);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Intelligence, Category = "GASRPG|Attributes|Primary")
+	FGameplayAttributeData Intelligence;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Intelligence);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resilience, Category = "GASRPG|Attributes|Primary")
+	FGameplayAttributeData Resilience;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Resilience);
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category = "GASRPG|Attributes|Primary")
+	FGameplayAttributeData Vigor;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Vigor);
+	
+#pragma endregion		
 	
 #pragma region Vital Attribute Declaration
 	
@@ -85,6 +104,10 @@ public:
 	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 	UFUNCTION() void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	UFUNCTION() void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
+	UFUNCTION() void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
+	UFUNCTION() void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
+	UFUNCTION() void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
 	
 #pragma endregion	
 	
