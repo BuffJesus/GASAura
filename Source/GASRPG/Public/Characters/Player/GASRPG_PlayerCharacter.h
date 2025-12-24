@@ -26,7 +26,7 @@ public:
 	virtual void OnRep_PlayerState() override;
 	
 	// Combat interface function overrides
-	FORCEINLINE virtual int32 GetCharacterLevel() override
+	virtual int32 GetCharacterLevel() override
 	{
 		if (const AGASRPG_PlayerState* PS { GetPlayerState<AGASRPG_PlayerState>() })
 		{

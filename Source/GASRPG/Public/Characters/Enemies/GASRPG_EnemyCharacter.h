@@ -20,7 +20,7 @@ public:
 	virtual void UnhighlightActor() override;
 	
 	// Combat interface function overrides
-	FORCEINLINE virtual int32 GetCharacterLevel() override { return Level; }
+	virtual int32 GetCharacterLevel() override { return Level; }
 	
 protected:
 	virtual void BeginPlay() override;
