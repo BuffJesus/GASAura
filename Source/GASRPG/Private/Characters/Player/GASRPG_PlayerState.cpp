@@ -4,6 +4,7 @@
 #include "Characters/Player/GASRPG_PlayerState.h"
 #include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 AGASRPG_PlayerState::AGASRPG_PlayerState()
 {
@@ -14,4 +15,16 @@ AGASRPG_PlayerState::AGASRPG_PlayerState()
 	AttributeSet = CreateDefaultSubobject<UGASRPG_AttributeSet>(TEXT("AttributeSet"));
 	
 	SetNetUpdateFrequency(100.f);
+}
+
+void AGASRPG_PlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	
+	DOREPLIFETIME(AGASRPG_PlayerState, Level);
+}
+
+void AGASRPG_PlayerState::OnRep_Level(int32 OldLevel)
+{
+	
 }

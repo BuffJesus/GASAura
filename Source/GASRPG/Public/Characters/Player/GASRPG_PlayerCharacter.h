@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GASRPG_PlayerState.h"
 #include "Characters/GASRPG_BaseCharacter.h"
 #include "GASRPG_PlayerCharacter.generated.h"
 
@@ -24,6 +25,16 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void OnRep_PlayerState() override;
 	
+	// Combat interface function overrides
+	FORCEINLINE virtual int32 GetCharacterLevel() override
+	{
+		if (const AGASRPG_PlayerState* PS { GetPlayerState<AGASRPG_PlayerState>() })
+		{
+			return PS->GetCharacterLevel();
+		}
+		return 1;
+	}
+
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "GASRPG|Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> CameraComponent;

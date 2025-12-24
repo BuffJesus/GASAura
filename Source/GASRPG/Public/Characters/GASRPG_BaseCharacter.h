@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "Interaction/GASRPG_CombatInterface.h"
 #include "GASRPG_BaseCharacter.generated.h"
 
 class UGameplayEffect;
@@ -12,7 +13,7 @@ class UAttributeSet;
 class UAbilitySystemComponent;
 
 UCLASS(Abstract)
-class GASRPG_API AGASRPG_BaseCharacter : public ACharacter, public IAbilitySystemInterface
+class GASRPG_API AGASRPG_BaseCharacter : public ACharacter, public IAbilitySystemInterface, public IGASRPG_CombatInterface
 {
 	GENERATED_BODY()
 

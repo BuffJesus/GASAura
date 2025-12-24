@@ -15,11 +15,18 @@ class GASRPG_API AGASRPG_EnemyCharacter : public AGASRPG_BaseCharacter, public I
 public:
 	AGASRPG_EnemyCharacter();
 	
-	// Interface function overrides
+	// Enemy interface function overrides
 	virtual void HighlightActor() override;
 	virtual void UnhighlightActor() override;
+	
+	// Combat interface function overrides
+	FORCEINLINE virtual int32 GetCharacterLevel() override { return Level; }
 	
 protected:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GASRPG|CharacterClassDefaults")
+	int32 Level { 1 };
+
 };
