@@ -4,8 +4,6 @@
 #include "GASRPG/Public/Characters/GASRPG_BaseCharacter.h"
 #include "AbilitySystemComponent.h"
 
-
-
 AGASRPG_BaseCharacter::AGASRPG_BaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
