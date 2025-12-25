@@ -44,4 +44,7 @@ void AGASRPG_BaseCharacter::InitializeDefaultAttributes() const
 	for (const auto& EffectClass : DefaultSecondaryAttributes)
 		if (IsValid(EffectClass))
 			ApplyEffectToSelf(EffectClass);
+	for (const auto& EffectClass : DefaultVitalAttributes)
+		if (IsValid(EffectClass))
+			ApplyEffectToSelf(EffectClass);
 }

@@ -53,4 +53,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
 	TArray<TSubclassOf<UGameplayEffect>> DefaultSecondaryAttributes;
 	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
+	TArray<TSubclassOf<UGameplayEffect>> DefaultVitalAttributes;
+	
 };
