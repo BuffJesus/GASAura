@@ -2,7 +2,6 @@
 
 
 #include "AbilitySystem/ModMagCalc/GASRPG_MMC_Base.h"
-
 #include "Interaction/GASRPG_CombatInterface.h"
 
 float UGASRPG_MMC_Base::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const

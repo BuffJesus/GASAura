@@ -28,8 +28,10 @@ void AGASRPG_BaseCharacter::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Effec
 {
 	check(IsValid(GetAbilitySystemComponent()));
 	checkf(IsValid(EffectClass), TEXT("EffectClass is not set!"));
-	
-	const FGameplayEffectContextHandle ContextHandle { GetAbilitySystemComponent()->MakeEffectContext() };
+    
+	FGameplayEffectContextHandle ContextHandle { GetAbilitySystemComponent()->MakeEffectContext() };
+	ContextHandle.AddSourceObject(this);  // Now GetSourceObject() returns the character
+    
 	const FGameplayEffectSpecHandle SpecHandle { GetAbilitySystemComponent()->MakeOutgoingSpec(EffectClass, Level, ContextHandle) };
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
