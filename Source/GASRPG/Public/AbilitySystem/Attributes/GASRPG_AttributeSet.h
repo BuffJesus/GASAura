@@ -128,6 +128,10 @@ public:
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, MaxMana);
 	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Luck, Category = "GASRPG|Attributes|Secondary")
+	FGameplayAttributeData Luck;
+	ATTRIBUTE_ACCESSORS_BASIC(UGASRPG_AttributeSet, Luck);
+	
 #pragma endregion	
 	
 #pragma region Replication Functions	
@@ -160,6 +164,7 @@ public:
 	UFUNCTION() void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const;
 	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
 	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
+	UFUNCTION() void OnRep_Luck(const FGameplayAttributeData& OldLuck) const;
 	
 	#pragma endregion
 	

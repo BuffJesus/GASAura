@@ -30,6 +30,7 @@ void UGASRPG_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, ManaRegen);
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxHealth);
 	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, MaxMana);
+	REPLICATE_ATTRIBUTE(UGASRPG_AttributeSet, Luck);
 }
 
 IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Strength);
@@ -50,6 +51,7 @@ IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, HealthRegen);
 IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, ManaRegen);
 IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxHealth);
 IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, MaxMana);
+IMPLEMENT_ATTRIBUTE_ONREP(UGASRPG_AttributeSet, Luck);
 
 void UGASRPG_AttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
 {
