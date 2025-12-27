@@ -4,7 +4,7 @@
 
 // Implements the OnRep function for an attribute
 #define IMPLEMENT_ATTRIBUTE_ONREP(ClassName, AttributeName) \
-void ClassName::OnRep_##AttributeName(const FGameplayAttributeData& Old##AttributeName) const \
+void ClassName::OnRep_##AttributeName(const FGameplayAttributeData& Old##AttributeName) \
 { \
 GAMEPLAYATTRIBUTE_REPNOTIFY(ClassName, AttributeName, Old##AttributeName); \
 }
