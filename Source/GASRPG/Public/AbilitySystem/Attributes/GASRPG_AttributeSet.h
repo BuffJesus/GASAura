@@ -138,33 +138,33 @@ public:
 	
 	#pragma region Primary Attribute Rep
 	
-	UFUNCTION() void OnRep_Strength(const FGameplayAttributeData& OldStrength) const;
-	UFUNCTION() void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence) const;
-	UFUNCTION() void OnRep_Resilience(const FGameplayAttributeData& OldResilience) const;
-	UFUNCTION() void OnRep_Vigor(const FGameplayAttributeData& OldVigor) const;
+	UFUNCTION() void OnRep_Strength(const FGameplayAttributeData& OldStrength);
+	UFUNCTION() void OnRep_Intelligence(const FGameplayAttributeData& OldIntelligence);
+	UFUNCTION() void OnRep_Resilience(const FGameplayAttributeData& OldResilience);
+	UFUNCTION() void OnRep_Vigor(const FGameplayAttributeData& OldVigor);
 	
 	#pragma endregion
 	
 	#pragma region Vital Attribute Rep
 	
-	UFUNCTION() void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
-	UFUNCTION() void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
+	UFUNCTION() void OnRep_Health(const FGameplayAttributeData& OldHealth);
+	UFUNCTION() void OnRep_Mana(const FGameplayAttributeData& OldMana);
 	
 	#pragma endregion
 	
 	#pragma region Secondary Attribute Rep
 	
-	UFUNCTION() void OnRep_Armor(const FGameplayAttributeData& OldArmor) const;
-	UFUNCTION() void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const;
-	UFUNCTION() void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const;
-	UFUNCTION() void OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const;
-	UFUNCTION() void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const;
-	UFUNCTION() void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const;
-	UFUNCTION() void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen) const;
-	UFUNCTION() void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen) const;
-	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const;
-	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
-	UFUNCTION() void OnRep_Luck(const FGameplayAttributeData& OldLuck) const;
+	UFUNCTION() void OnRep_Armor(const FGameplayAttributeData& OldArmor);
+	UFUNCTION() void OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration);
+	UFUNCTION() void OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance);
+	UFUNCTION() void OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance);
+	UFUNCTION() void OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage);
+	UFUNCTION() void OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance);
+	UFUNCTION() void OnRep_HealthRegen(const FGameplayAttributeData& OldHealthRegen);
+	UFUNCTION() void OnRep_ManaRegen(const FGameplayAttributeData& OldManaRegen);
+	UFUNCTION() void OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth);
+	UFUNCTION() void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana);
+	UFUNCTION() void OnRep_Luck(const FGameplayAttributeData& OldLuck);
 	
 	#pragma endregion
 	
