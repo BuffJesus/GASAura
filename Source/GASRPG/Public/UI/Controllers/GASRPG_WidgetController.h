@@ -6,6 +6,7 @@
 #include "UObject/Object.h"
 #include "GASRPG_WidgetController.generated.h"
 
+class UGASRPG_AttributeSet;
 class UAttributeSet;
 class UAbilitySystemComponent;
 
