@@ -13,4 +13,5 @@ UCLASS()
 class GASRPG_API AGASRPG_GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
 };
