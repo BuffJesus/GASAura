@@ -37,17 +37,17 @@ void AGASRPG_PlayerController::CursorTrace()
 
 void AGASRPG_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::Printf(TEXT("AbilityInputTagPressed: [%s]"), *InputTag.ToString()));
 }
 
 void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("AbilityInputTagReleased: [%s]"), *InputTag.ToString()));
 }
 
 void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, FString::Printf(TEXT("AbilityInputTagHeld: [%s]"), *InputTag.ToString()));
 }
 
 void AGASRPG_PlayerController::BeginPlay()
