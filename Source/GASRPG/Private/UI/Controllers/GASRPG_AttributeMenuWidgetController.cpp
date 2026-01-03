@@ -124,10 +124,7 @@ void UGASRPG_AttributeMenuWidgetController::SetAttributeTagsOnExistingRows(UGASR
 
 void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttributeInfo& Info)
 {
-	// TODO get AttributeSet
-	
-	// FIXED: Validate attribute set before accessing
-	if (!AS)
+	if (!AttributeSet)
 	{
 		UE_LOG(LogTemp, Error, TEXT("AttributeSet is null in BroadcastAttributeInfo!"));
 		return;
@@ -135,7 +132,7 @@ void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttrib
 	
 	// Create a copy of Info and update the AttributeValue
 	FAttributeInfo NewInfo { Info };
-	NewInfo.AttributeValue = Info.AttributeGetter.GetNumericValue(AS);
+	NewInfo.AttributeValue = Info.AttributeGetter.GetNumericValue(AttributeSet);
 	
 	// Broadcast the updated info to subscribers (attribute menu widget)
 	AttributeInfoDelegate.Broadcast(NewInfo);
