@@ -2,9 +2,9 @@
 
 
 #include "Characters/Player/GASRPG_PlayerController.h"
-#include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
+#include "Input/GASRPG_InputComponent.h"
 #include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
 
 AGASRPG_PlayerController::AGASRPG_PlayerController()
@@ -33,6 +33,21 @@ void AGASRPG_PlayerController::CursorTrace()
 			ThisActor->HighlightActor();
 		}
 	}
+}
+
+void AGASRPG_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	
+}
+
+void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	
+}
+
+void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	
 }
 
 void AGASRPG_PlayerController::BeginPlay()
@@ -66,8 +81,13 @@ void AGASRPG_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 	
-	UEnhancedInputComponent* EnhancedInputComponent { CastChecked<UEnhancedInputComponent>(InputComponent) };
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AGASRPG_PlayerController::Move);
+	UGASRPG_InputComponent* GASRPGInputComponent { CastChecked<UGASRPG_InputComponent>(InputComponent) };
+	GASRPGInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AGASRPG_PlayerController::Move);
+	
+	GASRPGInputComponent->BindAbilityActions(InputConfig, this, 
+		&ThisClass::AbilityInputTagPressed, 
+		&ThisClass::AbilityInputTagReleased, 
+		&ThisClass::AbilityInputTagHeld);
 }
 
 void AGASRPG_PlayerController::Move(const FInputActionValue& InputActionValue)

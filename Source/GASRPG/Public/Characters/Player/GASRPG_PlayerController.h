@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "GASRPG_PlayerController.generated.h"
 
+struct FGameplayTag;
+class UGASRPG_InputConfig;
 class IGASRPG_EnemyInterface;
 struct FInputActionValue;
 class UInputMappingContext;
@@ -41,6 +43,13 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "GASRPG|Cursor", meta = (ClampMin = "0.05", ClampMax = "0.5"))
 	float CursorTraceRate { 0.1f };
+	
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Input")
+	TObjectPtr<UGASRPG_InputConfig> InputConfig;
+	
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
 	
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> LastActor;
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> ThisActor;
