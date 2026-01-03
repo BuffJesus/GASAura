@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class GASRPG_API UGASRPG_AttributeMenuWidgetController : public UGASRPG_WidgetController
 {
 	GENERATED_BODY()
