@@ -8,6 +8,7 @@
 #include "UI/Controllers/GASRPG_OverlayWidgetController.h"
 #include "GASRPG_HUD.generated.h"
 
+class UGASRPG_AttributeMenuWidgetController;
 /**
  * 
  */
@@ -20,7 +21,11 @@ public:
 	UPROPERTY()
 	TObjectPtr<UGASRPG_UserWidget> OverlayWidget;
 	
+	UPROPERTY()
+	TObjectPtr<UGASRPG_UserWidget> AttributeMenuWidget;
+	
 	UGASRPG_OverlayWidgetController* GetOverlayWidgetController(const FWCParams& WCParams);
+	UGASRPG_AttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWCParams& WCParams);
 	
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 	
@@ -33,4 +38,13 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UGASRPG_OverlayWidgetController> OverlayWidgetControllerClass;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGASRPG_UserWidget> AttributeMenuWidgetClass;
+	
+	UPROPERTY()
+	TObjectPtr<UGASRPG_AttributeMenuWidgetController> AttributeMenuWidgetController;
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UGASRPG_AttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 };

@@ -6,6 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "GASRPG_AbilitySystemLibrary.generated.h"
 
+class UGASRPG_AttributeMenuWidgetController;
 class UGASRPG_OverlayWidgetController;
 /**
  * 
@@ -18,4 +19,7 @@ class GASRPG_API UGASRPG_AbilitySystemLibrary : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintPure, Category = "GASRPG|AbilitySystemLibrary|WidgetController", meta = (WorldContext = "WorldContextObject"))
 	static UGASRPG_OverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
+	
+	UFUNCTION(BlueprintPure, Category = "GASRPG|AbilitySystemLibrary|WidgetController", meta = (WorldContext = "WorldContextObject"))
+	static UGASRPG_AttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 };

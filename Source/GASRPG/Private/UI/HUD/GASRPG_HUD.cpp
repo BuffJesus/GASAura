@@ -2,19 +2,33 @@
 
 
 #include "UI/HUD/GASRPG_HUD.h"
+#include "UI/Controllers/GASRPG_AttributeMenuWidgetController.h"
 #include "UI/Controllers/GASRPG_OverlayWidgetController.h"
 #include "UI/Widgets/GASRPG_UserWidget.h"
 
+namespace
+{
+	template <typename T>
+	T* GetOrCreateWidgetController(TObjectPtr<T>& Controller, UObject* Outer, TSubclassOf<T> ControllerClass, const FWCParams& WCParams)
+	{
+		if (!Controller)
+		{
+			Controller = NewObject<T>(Outer, ControllerClass);
+			Controller->SetWCParams(WCParams);
+			Controller->BindCallbacksToDependencies();
+		}
+		return Controller;
+	}
+}
+
 UGASRPG_OverlayWidgetController* AGASRPG_HUD::GetOverlayWidgetController(const FWCParams& WCParams)
 {
-	if (OverlayWidgetController == nullptr)
-	{
-		OverlayWidgetController = NewObject<UGASRPG_OverlayWidgetController>(this, OverlayWidgetControllerClass);
-		OverlayWidgetController->SetWCParams(WCParams);
-		
-		return OverlayWidgetController;
-	}
-	return OverlayWidgetController;
+	return GetOrCreateWidgetController(OverlayWidgetController, this, OverlayWidgetControllerClass, WCParams);
+}
+
+UGASRPG_AttributeMenuWidgetController* AGASRPG_HUD::GetAttributeMenuWidgetController(const FWCParams& WCParams)
+{
+	return GetOrCreateWidgetController(AttributeMenuWidgetController, this, AttributeMenuWidgetControllerClass, WCParams);
 }
 
 void AGASRPG_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
@@ -33,5 +47,3 @@ void AGASRPG_HUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilityS
 	WidgetController->BindCallbacksToDependencies();
 	Widget->AddToViewport();
 }
-
-
