@@ -4,6 +4,7 @@
 #include "AbilitySystem/Data/GASRPG_AttributeInfo.h"
 #include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
 #include "AbilitySystem/Tags/GASRPG_Tags.h"
+#include "Logging/StructuredLog.h"
 
 #if WITH_EDITOR
 #include "GameplayTagsManager.h"
@@ -21,8 +22,8 @@ FAttributeInfo UGASRPG_AttributeInfo::FindAttributeInfoForTag(const FGameplayTag
 	
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Attribute Tag [%s] not found in GASRPG_AttributeInfo [%s]"),
-			*AttributeTag.ToString(), *GetNameSafe(this));
+		UE_LOGFMT(LogTemp, Warning, "Attribute Tag [{Tag}] not found in GASRPG_AttributeInfo [{AssetName}]",
+			("Tag", AttributeTag.ToString()), ("AssetName", GetNameSafe(this)));
 	}
 	
 	return FAttributeInfo();
@@ -84,7 +85,7 @@ void UGASRPG_AttributeInfo::PopulateDataAsset()
 		FProperty* Property { AttributeSetClass->FindPropertyByName(FName(*AttributeName)) };
 		if (!Property)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Could not find property for attribute: %s"), *AttributeName);
+			UE_LOGFMT(LogTemp, Warning, "Could not find property for attribute: {AttributeName}", ("AttributeName", AttributeName));
 			continue;
 		}
 		
@@ -92,7 +93,7 @@ void UGASRPG_AttributeInfo::PopulateDataAsset()
 		FStructProperty* StructProperty { CastField<FStructProperty>(Property) };
 		if (!StructProperty || StructProperty->Struct->GetFName() != FName("GameplayAttributeData"))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Property %s is not a GameplayAttributeData"), *AttributeName);
+			UE_LOGFMT(LogTemp, Warning, "Property {PropertyName} is not a GameplayAttributeData", ("PropertyName", AttributeName));
 			continue;
 		}
 		
@@ -129,7 +130,7 @@ void UGASRPG_AttributeInfo::PopulateDataAsset()
 			GameplayAttribute
 		});
 		
-		UE_LOG(LogTemp, Log, TEXT("Added attribute: %s"), *FormattedName);
+		UE_LOGFMT(LogTemp, Log, "Added attribute: {AttributeName}", ("AttributeName", FormattedName));
 	}
 	
 	// Sort by tag name for consistency (Primary, Secondary, Resistance, Vital order)
@@ -141,6 +142,6 @@ void UGASRPG_AttributeInfo::PopulateDataAsset()
 	// Mark the asset as modified
 	MarkPackageDirty();
 	
-	UE_LOG(LogTemp, Log, TEXT("DataAsset dynamically populated with %d attributes"), AttributeInfo.Num());
+	UE_LOGFMT(LogTemp, Log, "DataAsset dynamically populated with {Count} attributes", ("Count", AttributeInfo.Num()));
 }
 #endif
