@@ -2,7 +2,6 @@
 
 
 #include "UI/Controllers/GASRPG_WidgetController.h"
-
 #include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
 
 void UGASRPG_WidgetController::SetWCParams(const FWCParams& WCParams)

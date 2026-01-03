@@ -43,6 +43,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWCParams(const FWCParams& WCParams);
 	
+	UFUNCTION(BlueprintCallable)
 	virtual void BroadcastInitialValues();
 	virtual void BindCallbacksToDependencies();
 	
