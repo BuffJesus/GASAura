@@ -26,6 +26,15 @@ namespace GASRPG
 		{
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(SecondaryRoot, "GASRPG.Attribute.Secondary", "Secondary attribute root")
 			
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Armor, "GASRPG.Attribute.Secondary.Armor", "Reduces damage taken, improves block chance")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(ArmorPenetration, "GASRPG.Attribute.Secondary.ArmorPenetration", "Ignores a percentage of enemy armor, increases critical hit chance")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(BlockChance, "GASRPG.Attribute.Secondary.BlockChance", "Chance to cut incoming damage in half")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(CriticalHitChance, "GASRPG.Attribute.Secondary.CriticalHitChance", "Chance to deal double damage plus critical hit bonus")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(CriticalHitDamage, "GASRPG.Attribute.Secondary.CriticalHitDamage", "Bonus damage added to critical hits")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(CriticalHitResistance, "GASRPG.Attribute.Secondary.CriticalHitResistance", "Reduces critical hit chance of attacking enemies")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HealthRegen, "GASRPG.Attribute.Secondary.HealthRegen", "Amount of health regenerated per second")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(ManaRegen, "GASRPG.Attribute.Secondary.ManaRegen", "Amount of mana regenerated per second")
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Luck, "GASRPG.Attribute.Secondary.Luck", "Increases armor penetration, critical hit chance, and block chance")
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxHealth, "GASRPG.Attribute.Secondary.MaxHealth", "Maximum amount of health obtainable")
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MaxMana, "GASRPG.Attribute.Secondary.MaxMana", "Maximum amount of mana obtainable")
 		}
