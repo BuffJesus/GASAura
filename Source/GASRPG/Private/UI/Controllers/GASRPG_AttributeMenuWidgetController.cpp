@@ -3,6 +3,7 @@
 
 #include "UI/Controllers/GASRPG_AttributeMenuWidgetController.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/Attributes/GASRPG_AttributeSet.h"
 #include "AbilitySystem/Data/GASRPG_AttributeInfo.h"
 #include "Logging/StructuredLog.h"
 #include "UI/Widgets/GASRPG_UserWidget.h"
@@ -124,7 +125,9 @@ void UGASRPG_AttributeMenuWidgetController::SetAttributeTagsOnExistingRows(UGASR
 
 void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttributeInfo& Info)
 {
-	if (!AttributeSet)
+	UGASRPG_AttributeSet* AS { CastChecked<UGASRPG_AttributeSet>(AttributeSet) };
+	
+	if (!AS)
 	{
 		UE_LOG(LogTemp, Error, TEXT("AttributeSet is null in BroadcastAttributeInfo!"));
 		return;
@@ -132,7 +135,7 @@ void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttrib
 	
 	// Create a copy of Info and update the AttributeValue
 	FAttributeInfo NewInfo { Info };
-	NewInfo.AttributeValue = Info.AttributeGetter.GetNumericValue(AttributeSet);
+	NewInfo.AttributeValue = Info.AttributeGetter.GetNumericValue(AS);
 	
 	// Broadcast the updated info to subscribers (attribute menu widget)
 	AttributeInfoDelegate.Broadcast(NewInfo);
