@@ -123,9 +123,9 @@ void UGASRPG_AttributeMenuWidgetController::SetAttributeTagsOnExistingRows(UGASR
 	UE_LOG(LogTemp, Log, TEXT("Set attribute tags on %d existing row widgets"), TagsSet);
 }
 
-void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttributeInfo& Info)
+void UGASRPG_AttributeMenuWidgetController::BroadcastAttributeInfo(const FAttributeInfo& Info) const
 {
-	UGASRPG_AttributeSet* AS { CastChecked<UGASRPG_AttributeSet>(AttributeSet) };
+	const UGASRPG_AttributeSet* AS { CastChecked<UGASRPG_AttributeSet>(AttributeSet) };
 	
 	if (!AS)
 	{

@@ -38,5 +38,5 @@ protected:
 	
 private:
 	// Helper function to broadcast attribute info w/ current values
-	void BroadcastAttributeInfo(const FAttributeInfo& Info);
+	void BroadcastAttributeInfo(const FAttributeInfo& Info) const;
 };
