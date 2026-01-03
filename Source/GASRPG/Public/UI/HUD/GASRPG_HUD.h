@@ -39,9 +39,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UGASRPG_OverlayWidgetController> OverlayWidgetControllerClass;
 	
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UGASRPG_UserWidget> AttributeMenuWidgetClass;
-	
 	UPROPERTY()
 	TObjectPtr<UGASRPG_AttributeMenuWidgetController> AttributeMenuWidgetController;
 	
