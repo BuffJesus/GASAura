@@ -3,6 +3,7 @@
 
 #include "GASRPG/Public/Characters/GASRPG_BaseCharacter.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 
 AGASRPG_BaseCharacter::AGASRPG_BaseCharacter()
 {
@@ -45,4 +46,12 @@ void AGASRPG_BaseCharacter::InitializeDefaultAttributes() const
 	for (const auto& EffectClass : DefaultVitalAttributes)
 		if (IsValid(EffectClass))
 			ApplyEffectToSelf(EffectClass);
+}
+
+void AGASRPG_BaseCharacter::AddCharacterAbilities()
+{
+	UGASRPG_AbilitySystemComponent* ASC { CastChecked<UGASRPG_AbilitySystemComponent>(AbilitySystemComponent) };
+	if (!HasAuthority()) { return; }
+	
+	ASC->AddCharacterAbilities(DefaultAbilities);
 }

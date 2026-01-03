@@ -17,6 +17,8 @@ public:
 	void AbilityActorInfoSet();
 	
 	FEffectAssetTags EffectAssetTags;
+	
+	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& DefaultAbilities);
 
 protected:
 	UFUNCTION(Client, Reliable)

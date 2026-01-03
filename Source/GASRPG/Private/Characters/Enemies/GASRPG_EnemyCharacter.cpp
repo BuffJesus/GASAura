@@ -22,6 +22,7 @@ void AGASRPG_EnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void AGASRPG_EnemyCharacter::InitAbilityActorInfo()

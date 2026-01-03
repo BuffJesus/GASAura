@@ -63,6 +63,7 @@ void AGASRPG_PlayerCharacter::PossessedBy(AController* NewController)
 
 	// Init ability actor info server
 	InitAbilityActorInfo();
+	AddCharacterAbilities();
 }
 
 void AGASRPG_PlayerCharacter::OnRep_PlayerState()

@@ -8,6 +8,7 @@
 #include "Interaction/GASRPG_CombatInterface.h"
 #include "GASRPG_BaseCharacter.generated.h"
 
+class UGameplayAbility;
 class UGameplayEffect;
 class UAttributeSet;
 class UAbilitySystemComponent;
@@ -55,5 +56,11 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASRPG|GAS|Attributes")
 	TArray<TSubclassOf<UGameplayEffect>> DefaultVitalAttributes;
+	
+	void AddCharacterAbilities();
+	
+private:
+	UPROPERTY(EditAnywhere, Category = "GASRPG|GAS|Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> DefaultAbilities;
 	
 };
