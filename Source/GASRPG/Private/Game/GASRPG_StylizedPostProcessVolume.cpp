@@ -1,12 +1,15 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Game/GASRPG_StylizedPostProcessVolume.h"
 
 AGASRPG_StylizedPostProcessVolume::AGASRPG_StylizedPostProcessVolume()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	
+	// Affect entire world
 	bUnbound = true;
+	
+	// Lower priority so gameplay volumes (like enemy highlighting) take precedence
 	Priority = 0.5f;
 	
 	// Apply settings on construction
@@ -23,7 +26,7 @@ void AGASRPG_StylizedPostProcessVolume::BeginPlay()
 
 void AGASRPG_StylizedPostProcessVolume::ApplyStylizedSettings()
 {
-	// Colour saturation & vibrancy
+	// === COLOUR SATURATION & VIBRANCY ===
 	Settings.bOverride_ColorSaturation = true;
 	Settings.ColorSaturation = FVector4(ColourSaturation, ColourSaturation, ColourSaturation, 1.f);
 	
@@ -33,11 +36,12 @@ void AGASRPG_StylizedPostProcessVolume::ApplyStylizedSettings()
 	Settings.bOverride_ColorGamma = true;
 	Settings.ColorGamma = FVector4(ColourGamma, ColourGamma, ColourGamma, 1.f);
 	
-	// Warm tint for cartoonish feel
+	// Scene tint - neutral by default to preserve particle colors
 	Settings.bOverride_SceneColorTint = true;
 	Settings.SceneColorTint = SceneTint;
 	
-	// Make shadows more vibrant and less muddy
+	// === SHADOW ENHANCEMENTS ===
+	// Make shadows more vibrant and less muddy - critical for cartoon style
 	Settings.bOverride_ColorSaturationShadows = true;
 	Settings.ColorSaturationShadows = FVector4(ShadowSaturation, ShadowSaturation, ShadowSaturation, 1.f);
 	
@@ -47,18 +51,20 @@ void AGASRPG_StylizedPostProcessVolume::ApplyStylizedSettings()
 	Settings.bOverride_ColorCorrectionShadowsMax = true;
 	Settings.ColorCorrectionShadowsMax = ShadowsMax;
 	
-	// Highlight enhancements
+	// === HIGHLIGHT ENHANCEMENTS ===
 	Settings.bOverride_ColorSaturationHighlights = true;
 	Settings.ColorSaturationHighlights = FVector4(HighlightSaturation, HighlightSaturation, HighlightSaturation, 1.f);
 	
 	Settings.bOverride_ColorContrastHighlights = true;
 	Settings.ColorContrastHighlights = FVector4(HighlightContrast, HighlightContrast, HighlightContrast, 1.f);
 	
+	// === SHARPENING ===
 	// Crisp, clean edges for cartoon style
 	Settings.bOverride_Sharpen = true;
 	Settings.Sharpen = SharpenAmount;
 	
-	// Controlled bloom, glow without washing out (fingers crossed)
+	// === BLOOM ===
+	// Controlled bloom for stylized glow without washing out
 	Settings.bOverride_BloomIntensity = true;
 	Settings.BloomIntensity = BloomIntensity;
 	
@@ -69,25 +75,29 @@ void AGASRPG_StylizedPostProcessVolume::ApplyStylizedSettings()
 	Settings.bOverride_BloomMethod = true;
 	Settings.BloomMethod = EBloomMethod::BM_SOG;
 	
+	// === VIGNETTE ===
 	// Subtle vignette to draw focus to center
 	Settings.bOverride_VignetteIntensity = true;
 	Settings.VignetteIntensity = VignetteIntensity;
 	
-	// Very subtle grain for texter
+	// === FILM GRAIN ===
+	// Very subtle grain for texture
 	Settings.bOverride_FilmGrainIntensity = true;
 	Settings.FilmGrainIntensity = FilmGrainIntensity;
 	
-	// Critical settings for saturated, vibrant cartoon look
+	// === TONEMAPPER ===
+	// Settings for saturated, vibrant cartoon look
 	Settings.bOverride_FilmSlope = true;
-	Settings.FilmSlope = FilmSlope; // Lower = more saturated
+	Settings.FilmSlope = FilmSlope;
 	
 	Settings.bOverride_FilmToe = true;
-	Settings.FilmToe = FilmToe; // Controls shadow rolloff
+	Settings.FilmToe = FilmToe;
 	
 	Settings.bOverride_FilmShoulder = true;
-	Settings.FilmShoulder = FilmShoulder; // Controls highlight rolloff
+	Settings.FilmShoulder = FilmShoulder;
 	
-	// Stronger AO for better depth perception
+	// === AMBIENT OCCLUSION ===
+	// Stronger AO for better depth perception in stylized rendering
 	Settings.bOverride_AmbientOcclusionIntensity = true;
 	Settings.AmbientOcclusionIntensity = AmbientOcclusionIntensity;
 	
@@ -95,38 +105,38 @@ void AGASRPG_StylizedPostProcessVolume::ApplyStylizedSettings()
 	Settings.AmbientOcclusionRadius = AmbientOcclusionRadius;
 	
 	Settings.bOverride_AmbientOcclusionQuality = true;
-	Settings.AmbientOcclusionQuality = 60.0f; // Higher quality
+	Settings.AmbientOcclusionQuality = 60.0f;
 }
 
 void AGASRPG_StylizedPostProcessVolume::ResetToDefaults()
 {
-	ColourSaturation = 1.3f;
-	ColourContrast = 1.15f;
-	ColourGamma = 1.05f;
-	SceneTint = FLinearColor(1.0f, 0.98f, 0.95f);
+	// More conservative defaults to preserve particle colors
+	ColourSaturation = 1.15f;
+	ColourContrast = 1.08f;
+	ColourGamma = 1.02f;
+	SceneTint = FLinearColor(1.0f, 1.0f, 1.0f); // Neutral - no tint
 	
-	ShadowSaturation = 1.2f;
-	ShadowContrast = 1.1f;
+	ShadowSaturation = 1.15f;
+	ShadowContrast = 1.05f;
 	ShadowsMax = 0.12f;
 	
-	HighlightSaturation = 1.1f;
-	HighlightContrast = 1.05f;
+	HighlightSaturation = 1.05f;
+	HighlightContrast = 1.02f;
 	
-	SharpenAmount = 0.6f;
+	SharpenAmount = 0.5f;
 	
-	BloomIntensity = 0.9f;
-	BloomThreshold = 1.0f;
+	BloomIntensity = 0.75f;
+	BloomThreshold = 1.2f;
 	
-	VignetteIntensity = 0.35f;
-	FilmGrainIntensity = 0.025f;
+	VignetteIntensity = 0.3f;
+	FilmGrainIntensity = 0.015f;
 	
-	FilmSlope = 0.75f;
-	FilmToe = 0.48f;
-	FilmShoulder = 0.24f;
+	FilmSlope = 0.80f;
+	FilmToe = 0.52f;
+	FilmShoulder = 0.28f;
 	
-	AmbientOcclusionIntensity = 0.65f;
+	AmbientOcclusionIntensity = 0.6f;
 	AmbientOcclusionRadius = 180.0f;
 	
 	ApplyStylizedSettings();
 }
-
