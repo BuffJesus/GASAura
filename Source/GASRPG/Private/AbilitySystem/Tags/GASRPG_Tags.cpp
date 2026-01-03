@@ -46,6 +46,17 @@ namespace GASRPG
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Mana, "GASRPG.Attribute.Vital.Mana", "Amount of mana an Actor can use")
 		}
 	}
+	namespace Input
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputRoot, "GASRPG.Input", "Input root")
+		
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputLMB, "GASRPG.Input.LMB", "Left mouse button")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputRMB, "GASRPG.Input.RMB", "Right mouse button")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Input1, "GASRPG.Input.1", "First ability key")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Input2, "GASRPG.Input.2", "Second ability key")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Input3, "GASRPG.Input.3", "Third ability key")
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Input4, "GASRPG.Input.4", "Fourth ability key")
+	}
 	namespace Message
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(MessageRoot, "GASRPG.Message", "Message root")
