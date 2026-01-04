@@ -6,13 +6,16 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
+#include "AbilitySystem/Tags/GASRPG_Tags.h"
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
+#include "Components/SplineComponent.h"
 #include "Input/GASRPG_InputComponent.h"
 #include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
 
 AGASRPG_PlayerController::AGASRPG_PlayerController()
 {
 	bReplicates = true;
+	SplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
 }
 
 void AGASRPG_PlayerController::CursorTrace()
@@ -40,7 +43,11 @@ void AGASRPG_PlayerController::CursorTrace()
 
 void AGASRPG_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	
+	if (InputTag.MatchesTagExact(GASRPG::Input::InputLMB))
+	{
+		bTargeting = ThisActor ? true : false;
+		bAutoRunning = false;
+	}
 }
 
 void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
@@ -51,8 +58,36 @@ void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	if (GetASC() == nullptr) { return; }
-	GetASC()->AbilityInputTagHeld(InputTag);
+	if (!InputTag.MatchesTagExact(GASRPG::Input::InputLMB))
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+		return;
+	}
+	if (bTargeting)
+	{
+		if (GetASC())
+		{
+			GetASC()->AbilityInputTagHeld(InputTag);
+		}
+	}
+	else
+	{
+		FollowTime = GetWorld()->GetDeltaSeconds();
+		
+		FHitResult Hit;
+		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		{
+			CachedDestination = Hit.ImpactPoint;
+		}
+		if (APawn* ControlledPawn { GetPawn() })
+		{
+			const FVector WorldDirection { (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal() };
+			ControlledPawn->AddMovementInput(WorldDirection);
+		}
+	}
 }
 
 UGASRPG_AbilitySystemComponent* AGASRPG_PlayerController::GetASC() 

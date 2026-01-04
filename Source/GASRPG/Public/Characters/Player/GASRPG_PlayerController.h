@@ -13,6 +13,7 @@ struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
 class UGASRPG_AbilitySystemComponent;
+class USplineComponent;
 /**
  * 
  */
@@ -59,4 +60,12 @@ private:
 	TObjectPtr<UGASRPG_AbilitySystemComponent> GASRPGASC;
 	
 	UGASRPG_AbilitySystemComponent* GetASC();
+	
+	FVector CachedDestination { FVector::ZeroVector };
+	float FollowTime { 0.f };
+	float ShortPressThreshold { 0.5f };
+	bool bAutoRunning { false };
+	bool bTargeting { false };
+	UPROPERTY(EditDefaultsOnly) float AutoRunAcceptanceRadius { 50.f };
+	UPROPERTY(VisibleAnywhere) TObjectPtr<USplineComponent> SplineComponent { nullptr };
 };
