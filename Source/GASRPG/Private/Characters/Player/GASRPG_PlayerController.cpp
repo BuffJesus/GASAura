@@ -8,15 +8,43 @@
 #include "NavigationSystem.h"
 #include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "AbilitySystem/Tags/GASRPG_Tags.h"
-#include "Characters/Player/GASRPG_PlayerCharacter.h"
 #include "Components/SplineComponent.h"
 #include "Input/GASRPG_InputComponent.h"
 #include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
+#include "GASRPG/GASRPG.h"
 
 AGASRPG_PlayerController::AGASRPG_PlayerController()
 {
 	bReplicates = true;
 	SplineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
+}
+
+void AGASRPG_PlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+	
+	CursorTrace();
+	AutoRun();
+}
+
+void AGASRPG_PlayerController::AutoRun()
+{
+	if (!bAutoRunning) { return; }
+	
+	if (APawn* ControlledPawn { GetPawn() })
+	{
+		const FVector LocationOnSpline { SplineComponent->FindLocationClosestToWorldLocation(
+			ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World) };
+		const FVector Direction { SplineComponent->FindDirectionClosestToWorldLocation(
+			LocationOnSpline, ESplineCoordinateSpace::World) };
+		ControlledPawn->AddMovementInput(Direction);
+		
+		const float DistanceToDestination { (LocationOnSpline - CachedDestination).Length() };
+		if (DistanceToDestination <= AutoRunAcceptanceRadius)
+		{
+			bAutoRunning = false;
+		}
+	}
 }
 
 void AGASRPG_PlayerController::CursorTrace()
@@ -61,11 +89,12 @@ void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		}
 		return;
 	}
+	
 	if (bTargeting)
 	{
 		if (GetASC())
 		{
-			GetASC()->AbilityInputTagHeld(InputTag);
+			GetASC()->AbilityInputTagReleased(InputTag);
 		}
 	}
 	else
@@ -73,15 +102,32 @@ void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		APawn* ControlledPawn { GetPawn<APawn>() };
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
 		{
-			if (UNavigationPath* NavPath { UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination) })
+			// Use ECC_Navigation channel to trace through obstacles and hit navigable surfaces
+			FHitResult NavChannelCursorHitResult;
+			GetHitResultUnderCursor(ECC_Navigation, false, NavChannelCursorHitResult);
+			
+			if (NavChannelCursorHitResult.bBlockingHit)
 			{
-				SplineComponent->ClearSplinePoints();
-				for (const FVector& PointLoc : NavPath->PathPoints)
+				// Project the impact point to the NavMesh with a larger query extent
+				FVector NavLocation;
+				if (FindNavigableDestination(NavChannelCursorHitResult.ImpactPoint, NavLocation))
 				{
-					SplineComponent->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-					DrawDebugSphere(GetWorld(), PointLoc, 10.0f, 10, FColor::Green, false, 5.f);
+					if (UNavigationPath* NavPath { UNavigationSystemV1::FindPathToLocationSynchronously(
+						this, ControlledPawn->GetActorLocation(), NavLocation) })
+					{
+						if (NavPath->PathPoints.Num() > 0)
+						{
+							SplineComponent->ClearSplinePoints();
+							for (const FVector& PointLoc : NavPath->PathPoints)
+							{
+								SplineComponent->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+								DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Green, false, 5.f);
+							}
+							CachedDestination = NavPath->PathPoints.Last();
+							bAutoRunning = true;
+						}
+					}
 				}
-				bAutoRunning = true;
 			}
 		}
 		FollowTime = 0.f;
@@ -99,6 +145,7 @@ void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		}
 		return;
 	}
+	
 	if (bTargeting)
 	{
 		if (GetASC())
@@ -108,13 +155,15 @@ void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	}
 	else
 	{
-		FollowTime = GetWorld()->GetDeltaSeconds();
+		FollowTime += GetWorld()->GetDeltaSeconds();
 		
+		// Use ECC_Navigation channel for click-to-move - traces through obstacles
 		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
+		if (GetHitResultUnderCursor(ECC_Navigation, false, Hit))
 		{
 			CachedDestination = Hit.ImpactPoint;
 		}
+		
 		if (APawn* ControlledPawn { GetPawn() })
 		{
 			const FVector WorldDirection { (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal() };
@@ -127,9 +176,26 @@ UGASRPG_AbilitySystemComponent* AGASRPG_PlayerController::GetASC()
 {
 	if (GASRPGASC == nullptr)
 	{
-		GASRPGASC = Cast<UGASRPG_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+		GASRPGASC = Cast<UGASRPG_AbilitySystemComponent>(
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
 	}
 	return GASRPGASC;
+}
+
+bool AGASRPG_PlayerController::FindNavigableDestination(const FVector& WorldLocation, FVector& OutNavLocation) const
+{
+	if (!NavSystem) { return false; }
+	
+	FNavLocation NavLocation;
+	const FNavAgentProperties& NavAgentProps { GetNavAgentPropertiesRef() };
+	
+	if (NavSystem->ProjectPointToNavigation(WorldLocation, NavLocation, NavQueryExtent, &NavAgentProps))
+	{
+		OutNavLocation = NavLocation.Location;
+		return true;
+	}
+	
+	return false;
 }
 
 void AGASRPG_PlayerController::BeginPlay()
@@ -137,9 +203,11 @@ void AGASRPG_PlayerController::BeginPlay()
 	Super::BeginPlay();
 	check(GASRPGContext);
 	
-	GetWorld()->GetTimerManager().SetTimer(CursorHitTimerHandle, this, &AGASRPG_PlayerController::CursorTrace, CursorTraceRate, true);
+	// Cache the navigation system for pathfinding
+	NavSystem = UNavigationSystemV1::GetCurrent(GetWorld());
 	
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem { ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) })
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem { 
+		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()) })
 	{
 		Subsystem->AddMappingContext(GASRPGContext, 0);
 	}
@@ -151,12 +219,6 @@ void AGASRPG_PlayerController::BeginPlay()
 	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
 	InputMode.SetHideCursorDuringCapture(false);
 	SetInputMode(InputMode);
-}
-
-void AGASRPG_PlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	Super::EndPlay(EndPlayReason);
-	GetWorldTimerManager().ClearTimer(CursorHitTimerHandle);
 }
 
 void AGASRPG_PlayerController::SetupInputComponent()
@@ -175,12 +237,15 @@ void AGASRPG_PlayerController::SetupInputComponent()
 void AGASRPG_PlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	const FVector2D InputAxisVector { InputActionValue.Get<FVector2D>() };
+	const FRotator Rotation { GetControlRotation() };
+	const FRotator YawRotation { 0.f, Rotation.Yaw, 0.f };
+	
+	const FVector ForwardDirection { FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X) };
+	const FVector RightDirection { FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y) };
 	
 	if (APawn* ControlledPawn { GetPawn<APawn>() })
 	{
-		ControlledPawn->AddMovementInput(FVector::ForwardVector, InputAxisVector.Y);
-		ControlledPawn->AddMovementInput(FVector::RightVector, InputAxisVector.X);
+		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
+		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 	}
 }
-
-

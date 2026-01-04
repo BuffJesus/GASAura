@@ -14,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class UGASRPG_AbilitySystemComponent;
 class USplineComponent;
+class UNavigationSystemV1;
 /**
  * 
  */
@@ -24,10 +25,10 @@ class GASRPG_API AGASRPG_PlayerController : public APlayerController
 	
 public:
 	AGASRPG_PlayerController();
+	virtual void PlayerTick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;	
-	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupInputComponent() override;
 	
 private:
@@ -40,11 +41,7 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 	
 	void CursorTrace();
-	
-	UPROPERTY() FTimerHandle CursorHitTimerHandle;
-	
-	UPROPERTY(EditAnywhere, Category = "GASRPG|Cursor", meta = (ClampMin = "0.05", ClampMax = "0.5"))
-	float CursorTraceRate { 0.1f };
+	void AutoRun();
 	
 	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Input")
 	TObjectPtr<UGASRPG_InputConfig> InputConfig;
@@ -66,6 +63,21 @@ private:
 	float ShortPressThreshold { 0.5f };
 	bool bAutoRunning { false };
 	bool bTargeting { false };
-	UPROPERTY(EditDefaultsOnly) float AutoRunAcceptanceRadius { 50.f };
-	UPROPERTY(VisibleAnywhere) TObjectPtr<USplineComponent> SplineComponent { nullptr };
+	
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Navigation")
+	float AutoRunAcceptanceRadius { 50.f };
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> SplineComponent { nullptr };
+	
+	// Navigation system reference for pathfinding
+	UPROPERTY()
+	TObjectPtr<UNavigationSystemV1> NavSystem { nullptr };
+	
+	// Query extent for ProjectPointToNavigation - larger than default for better NavMesh reach
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Navigation")
+	FVector NavQueryExtent { 400.f, 400.f, 250.f };
+	
+	// Helper to find a valid navigation destination from a world location
+	bool FindNavigableDestination(const FVector& WorldLocation, FVector& OutNavLocation) const;
 };
