@@ -37,6 +37,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Combat")
 	FName WeaponSocket { "WeaponHandSocket" };
 	
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Combat")
+	FName WeaponTipSocketName { "WeaponTipSocket" };
+	
+	virtual FVector GetCombatSocketLocation() override { return WeaponMesh->GetSocketLocation(WeaponTipSocketName); }
+	
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	

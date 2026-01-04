@@ -23,4 +23,5 @@ class GASRPG_API IGASRPG_CombatInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	FORCEINLINE virtual int32 GetCharacterLevel() { return 0; }
+	FORCEINLINE virtual FVector GetCombatSocketLocation() { return FVector(); }
 };
