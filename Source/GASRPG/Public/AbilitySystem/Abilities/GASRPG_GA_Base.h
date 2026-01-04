@@ -6,11 +6,13 @@
 #include "Abilities/GameplayAbility.h"
 #include "GASRPG_GA_Base.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class GASRPG_API UGASRPG_GA_Base : public UGameplayAbility
 {
 	GENERATED_BODY()
+	
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Input")
+	FGameplayTag DefaultInputTag;
 };
