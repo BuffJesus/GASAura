@@ -2,7 +2,6 @@
 
 
 #include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
-
 #include "AbilitySystem/Abilities/GASRPG_GA_Base.h"
 #include "AbilitySystem/Tags/GASRPG_Tags.h"
 #include "Algo/AnyOf.h"
