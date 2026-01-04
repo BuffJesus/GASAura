@@ -22,7 +22,8 @@ public class GASRPG : ModuleRules
 		{
 			"GameplayAbilities",
 			"GameplayTasks",
-			"GameplayTags"
+			"GameplayTags",
+			"NavigationSystem"
 		});
 
 		// Uncomment if you are using Slate UI
