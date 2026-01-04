@@ -39,7 +39,7 @@ void AGASRPG_PlayerController::AutoRun()
 			LocationOnSpline, ESplineCoordinateSpace::World) };
 		ControlledPawn->AddMovementInput(Direction);
 		
-		const float DistanceToDestination { (LocationOnSpline - CachedDestination).Length() };
+		const float DistanceToDestination = (LocationOnSpline - CachedDestination).Length();
 		if (DistanceToDestination <= AutoRunAcceptanceRadius)
 		{
 			bAutoRunning = false;
