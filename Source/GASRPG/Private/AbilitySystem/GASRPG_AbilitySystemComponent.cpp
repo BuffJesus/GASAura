@@ -38,10 +38,10 @@ void UGASRPG_AbilitySystemComponent::AddCharacterAbilities(
 		}
 
 		FGameplayAbilitySpec AbilitySpec { FGameplayAbilitySpec(AbilityClass, 1) };
-		if (const UGASRPG_GA_Base* AuraAbility = AbilityClass->GetDefaultObject<UGASRPG_GA_Base>())
+		if (const UGASRPG_GA_Base* GASRPGAbility { AbilityClass->GetDefaultObject<UGASRPG_GA_Base>() }) 
 		{
-			FGameplayTagContainer& DynamicTags = AbilitySpec.GetDynamicSpecSourceTags();	
-			DynamicTags.AddTag(AuraAbility->DefaultInputTag);
+			FGameplayTagContainer& DynamicTags { AbilitySpec.GetDynamicSpecSourceTags() };	
+			DynamicTags.AddTag(GASRPGAbility->DefaultInputTag);
 		}
 
 		GiveAbility(AbilitySpec);
