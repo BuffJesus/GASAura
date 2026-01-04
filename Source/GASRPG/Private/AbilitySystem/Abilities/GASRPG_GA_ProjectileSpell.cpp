@@ -22,11 +22,13 @@ void UGASRPG_GA_ProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandl
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
 		
-		GetWorld()->SpawnActorDeferred<AGASRPG_Projectile>(
+		AGASRPG_Projectile* Projectile { GetWorld()->SpawnActorDeferred<AGASRPG_Projectile>(
 			ProjectileClass, 
 			SpawnTransform, 
 			GetOwningActorFromActorInfo(), 
 			Cast<APawn>(GetAvatarActorFromActorInfo()), 
-			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn) };
+		
+		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
