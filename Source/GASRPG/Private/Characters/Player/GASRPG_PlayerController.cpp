@@ -2,7 +2,6 @@
 
 
 #include "Characters/Player/GASRPG_PlayerController.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
 #include "NavigationPath.h"
@@ -13,8 +12,6 @@
 #include "Components/SplineComponent.h"
 #include "Input/GASRPG_InputComponent.h"
 #include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
-
-#define ECC_Navigation ECC_GameTraceChannel1
 
 AGASRPG_PlayerController::AGASRPG_PlayerController()
 {
@@ -76,32 +73,15 @@ void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		APawn* ControlledPawn { GetPawn<APawn>() };
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
 		{
-			FHitResult NavChannelCursorHitResult;
-			GetHitResultUnderCursor(ECC_Navigation, false, NavChannelCursorHitResult);
-			if (NavChannelCursorHitResult.bBlockingHit)
+			if (UNavigationPath* NavPath { UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), CachedDestination) })
 			{
-				UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-				if (NavSystem)
+				SplineComponent->ClearSplinePoints();
+				for (const FVector& PointLoc : NavPath->PathPoints)
 				{
-					FNavLocation ImpactPointNavLocation;
-					const FVector QueryingExtent = FVector(400.0f, 400.0f, 250.0f);
-					const FNavAgentProperties& NavAgentProps = GetNavAgentPropertiesRef();
-					const bool bNavLocationFound = NavSystem->ProjectPointToNavigation(NavChannelCursorHitResult.ImpactPoint, ImpactPointNavLocation, QueryingExtent, &NavAgentProps);
-					if (bNavLocationFound)
-					{
-						if (UNavigationPath* NavPath { UNavigationSystemV1::FindPathToLocationSynchronously(this, ControlledPawn->GetActorLocation(), ImpactPointNavLocation) })
-						{
-							SplineComponent->ClearSplinePoints();
-							for (const FVector& PointLoc : NavPath->PathPoints)
-							{
-								SplineComponent->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-								DrawDebugSphere(GetWorld(), PointLoc, 10.0f, 10, FColor::Green, false, 5.f);
-							}
-							CachedDestination = NavPath->PathPoints.Last();
-							bAutoRunning = true;
-						}
-					}
+					SplineComponent->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
+					DrawDebugSphere(GetWorld(), PointLoc, 10.0f, 10, FColor::Green, false, 5.f);
 				}
+				bAutoRunning = true;
 			}
 		}
 		FollowTime = 0.f;
@@ -128,10 +108,10 @@ void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	}
 	else
 	{
-		FollowTime += GetWorld()->GetDeltaSeconds();
+		FollowTime = GetWorld()->GetDeltaSeconds();
 		
 		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Navigation, false, Hit))
+		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
 		{
 			CachedDestination = Hit.ImpactPoint;
 		}
@@ -202,3 +182,5 @@ void AGASRPG_PlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(FVector::RightVector, InputAxisVector.X);
 	}
 }
+
+
