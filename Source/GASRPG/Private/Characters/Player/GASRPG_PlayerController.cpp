@@ -2,7 +2,10 @@
 
 
 #include "Characters/Player/GASRPG_PlayerController.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/GASRPG_AbilitySystemComponent.h"
 #include "Characters/Player/GASRPG_PlayerCharacter.h"
 #include "Input/GASRPG_InputComponent.h"
 #include "Interaction/Interfaces/Enemy/GASRPG_EnemyInterface.h"
@@ -37,17 +40,28 @@ void AGASRPG_PlayerController::CursorTrace()
 
 void AGASRPG_PlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, FString::Printf(TEXT("AbilityInputTagPressed: [%s]"), *InputTag.ToString()));
+	
 }
 
 void AGASRPG_PlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Blue, FString::Printf(TEXT("AbilityInputTagReleased: [%s]"), *InputTag.ToString()));
+	if (GetASC() == nullptr) { return; }
+	GetASC()->AbilityInputTagReleased(InputTag);
 }
 
 void AGASRPG_PlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Yellow, FString::Printf(TEXT("AbilityInputTagHeld: [%s]"), *InputTag.ToString()));
+	if (GetASC() == nullptr) { return; }
+	GetASC()->AbilityInputTagHeld(InputTag);
+}
+
+UGASRPG_AbilitySystemComponent* AGASRPG_PlayerController::GetASC() 
+{
+	if (GASRPGASC == nullptr)
+	{
+		GASRPGASC = Cast<UGASRPG_AbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return GASRPGASC;
 }
 
 void AGASRPG_PlayerController::BeginPlay()

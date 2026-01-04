@@ -12,6 +12,7 @@ class IGASRPG_EnemyInterface;
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
+class UGASRPG_AbilitySystemComponent;
 /**
  * 
  */
@@ -53,4 +54,9 @@ private:
 	
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> LastActor;
 	UPROPERTY() TScriptInterface<IGASRPG_EnemyInterface> ThisActor;
+	
+	UPROPERTY()
+	TObjectPtr<UGASRPG_AbilitySystemComponent> GASRPGASC;
+	
+	UGASRPG_AbilitySystemComponent* GetASC();
 };
