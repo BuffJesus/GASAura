@@ -13,6 +13,6 @@ class GASRPG_API UGASRPG_GA_Base : public UGameplayAbility
 	GENERATED_BODY()
 	
 public:
-	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "GASRPG|Input", meta = (Categories = "GASRPG.Input"))
 	FGameplayTag DefaultInputTag;
 };
