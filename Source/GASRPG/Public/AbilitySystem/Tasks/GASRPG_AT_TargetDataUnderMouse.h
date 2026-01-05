@@ -19,7 +19,7 @@ public:
 	static UGASRPG_AT_TargetDataUnderMouse* CreateTargetDataUnderMouse(UGameplayAbility* OwningAbility);
 	
 	UPROPERTY(BlueprintAssignable)
-	FMouseTargetDataSignature OnTargetData;
+	FMouseTargetDataSignature ValidData;
 	
 private:
 	virtual void Activate() override;

@@ -26,6 +26,5 @@ void UGASRPG_AT_TargetDataUnderMouse::SendCursorData()
 	if (GASRPGPC == nullptr) { return; }
 	
 	FHitResult CursorHit { GASRPGPC->GetCursorHit() };
-	OnTargetData.Broadcast(CursorHit.ImpactPoint);
-	DrawDebugSphere(GetWorld(), CursorHit.ImpactPoint, 10.0f, 12, FColor::Red, false, 0.1f);
+	ValidData.Broadcast(CursorHit.ImpactPoint);
 }
