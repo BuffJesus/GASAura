@@ -26,10 +26,12 @@ class GASRPG_API AGASRPG_PlayerController : public APlayerController
 public:
 	AGASRPG_PlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
+	FORCEINLINE FHitResult GetCursorHit() const { return CursorHit; }
 
 protected:
 	virtual void BeginPlay() override;	
 	virtual void SetupInputComponent() override;
+	FHitResult CursorHit;
 	
 private:
 	UPROPERTY(EditAnywhere, Category = "GASRPG|Input")

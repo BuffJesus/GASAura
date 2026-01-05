@@ -49,7 +49,6 @@ void AGASRPG_PlayerController::AutoRun()
 
 void AGASRPG_PlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) { return; }
 	
