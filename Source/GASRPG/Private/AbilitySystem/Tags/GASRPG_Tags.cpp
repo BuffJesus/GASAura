@@ -46,6 +46,20 @@ namespace GASRPG
 			UE_DEFINE_GAMEPLAY_TAG_COMMENT(Mana, "GASRPG.Attribute.Vital.Mana", "Amount of mana an Actor can use")
 		}
 	}
+	namespace Event
+	{
+		UE_DEFINE_GAMEPLAY_TAG_COMMENT(EventRoot, "GASRPG.Event", "Event root")
+		namespace Montage
+		{
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(MontageRoot, "GASRPG.Event.Montage", "Montage root")
+			namespace Fire
+			{
+				UE_DEFINE_GAMEPLAY_TAG_COMMENT(FireRoot, "GASRPG.Event.Montage.Fire", "Fire montage root")
+				
+				UE_DEFINE_GAMEPLAY_TAG_COMMENT(Bolt, "GASRPG.Event.Montage.Fire.Bolt", "Fire bolt montage")
+			}
+		}
+	}
 	namespace Input
 	{
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputRoot, "GASRPG.Input", "Input root")

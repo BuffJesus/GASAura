@@ -47,6 +47,20 @@ namespace GASRPG
 			UE_DECLARE_GAMEPLAY_TAG_EXTERN(Mana)
 		}
 	}
+	namespace Event
+	{
+		UE_DECLARE_GAMEPLAY_TAG_EXTERN(EventRoot)
+		namespace Montage
+		{
+			UE_DECLARE_GAMEPLAY_TAG_EXTERN(MontageRoot)
+			namespace Fire
+			{
+				UE_DECLARE_GAMEPLAY_TAG_EXTERN(FireRoot)
+				
+				UE_DECLARE_GAMEPLAY_TAG_EXTERN(Bolt)
+			}
+		}
+	}
 	namespace Input
 	{
 		UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputRoot)
